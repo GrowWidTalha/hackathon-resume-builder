@@ -1,139 +1,273 @@
 * {
     margin: 0;
     padding: 0;
+    transition: all 0.3s ease;
     box-sizing: border-box;
 }
-:root{
+
+:root {
     --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --light-text-color: #fff;
 }
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f0f2f5;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.navbar {
+    background-color: var(--secondary-color);
+    color: var(--light-text-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.toggle-button {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem;
+    transition: all 0.3s ease;
 }
 
 .container {
+    flex: 1;
+    min-width: 300px;
     max-width: 800px;
-    margin: 40px auto;
-    background-color: #fff;
+    background-color: var(--light-text-color);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-/* Typography */
-h1, h2, h3 {
-    margin-bottom: 15px;
+#resume {
+    flex: 2 !important;
+}
+
+.form-container {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+    max-height: calc(100vh - 4rem);
+    overflow: auto !important;
+    transition: max-height 0.3s ease;
+}
+
+@media screen and (max-width: 1200px) {
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-container {
+        position: static;
+        max-height: none;
+    }
+}
+
+.container {
+    background-color: var(--light-text-color);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    transition: box-shadow 0.3s ease;
+}
+
+.form-container {
+    padding: 2rem;
+}
+
+.form-container h2 {
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+header .header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+header #resumePicture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+}
+
+header {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    padding: 2rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 h1 {
     font-size: 2.5rem;
-    color: #fff;
+    margin-bottom: 0.5rem;
 }
 
 h2 {
     font-size: 1.5rem;
-    color: #2c3e50;
+    color: var(--secondary-color);
     border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 5px;
-    margin-top: 30px;
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
 }
 
 h3 {
     font-size: 1.2rem;
-    color: #2c3e50;
+    color: var(--secondary-color);
 }
 
-p {
-    margin-bottom: 10px;
-}
-
-/* Header */
-header {
-    background-color: var(--primary-color);
-    color: #fff;
-    padding: 40px;
-    text-align: center;
-}
-
-header p {
-    font-size: 1.2rem;
-    opacity: 0.8;
-}
-
-/* Main content */
 main {
-    padding: 40px;
+    padding: 2rem;
 }
 
-/* Sections */
 section {
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
 }
 
-/* Contact section */
 .contact ul {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    gap: 1rem;
 }
 
 .contact li {
-    flex-basis: calc(50% - 10px);
-    margin-bottom: 10px;
+    flex: 1 1 calc(50% - 0.5rem);
 }
 
 .contact i {
-    margin-right: 10px;
+    margin-right: 0.5rem;
     color: var(--primary-color);
-}
-
-/* Lists */
-ul {
-    list-style-type: none;
-    padding-left: 20px;
+    transition: color 0.3s ease;
 }
 
 .skills ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 0.5rem;
 }
 
 .skills li {
     background-color: var(--primary-color);
-    color: #fff;
-    padding: 5px 15px;
-    border-radius: 20px;
+    list-style: none;
+    color: var(--light-text-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
     font-size: 0.9rem;
+    transition: background-color 0.3s ease;
 }
 
-/* Job and Education entries */
-.job, .degree {
-    margin-bottom: 25px;
+.skills li:hover {
+    background-color: #2980b9;
+}
+
+.job,
+.degree {
+    margin-bottom: 1.5rem;
 }
 
 .job-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    flex-wrap: wrap;
 }
 
-.company, .school {
+.company,
+.school {
     font-weight: bold;
     color: var(--primary-color);
+    transition: color 0.3s ease;
 }
 
 .date {
     font-style: italic;
     color: #7f8c8d;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
 }
 
-/* Links */
 a {
     color: var(--primary-color);
     text-decoration: none;
@@ -141,30 +275,16 @@ a {
 }
 
 a:hover {
-    color:var(--primary-color);
+    color: #2980b9;
 }
 
-/* Responsive design */
-@media screen and (max-width: 600px) {
-    .container {
-        margin: 0;
-        border-radius: 0;
-    }
+.hidden {
+    display: none;
+}
 
-    header, main {
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    h3 {
-        font-size: 1.1rem;
+@media screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
     }
 
     .contact ul {
@@ -182,4 +302,168 @@ a:hover {
     .skills ul {
         justify-content: flex-start;
     }
+}
+
+@media screen and (max-width: 480px) {
+    header,
+    main {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+}
+
+.form-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-section:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.add-button,
+.submit-button {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.add-button:hover,
+.submit-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.work-experience-group {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.work-experience-group:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.section-toggle {
+    background-color: #f0f0f0;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.section-toggle:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.02);
+}
+
+.section-content {
+    padding: 1rem;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+.section-content.hidden {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.delete-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #e03e3e;
+    transform: scale(1.05);
+}
+
+.color-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.color-input {
+    width: 100px;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.color-input-group label {
+    font-size: 1rem;
+    font-weight: bold;
 }

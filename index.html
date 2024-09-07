@@ -1,95 +1,215 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Resume</title>
-    <link rel="stylesheet" href="./src/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-    <div id="form">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Resume Builder</title>
+        <link rel="stylesheet" href="./src/css/style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar-brand">Resume Builder</div>
+            <button id="toggleForm" class="toggle-button">
+                Toggle Edit Form
+            </button>
+        </nav>
 
-    </div>
-    <div class="container" id="resume">
-        <header>
-            <div class="header-content">
-                <h1 id="name">Talha Ali</h1>
-                <p id="proffesion">Full Stack Web Developer</p>
+        <div class="main-container">
+            <div class="flex-container">
+                <div id="form" class="container edit-form form-container">
+                    <h2>Edit Resume</h2>
+                    <form id="resumeForm">
+                        <div class="color-input-group">
+                            <label for="color">Color:</label>
+                            <input
+                                type="color"
+                                class="color-input"
+                                name="color"
+                                id="color"
+                            />
+                        </div>
+                        <div class="form-section">
+                            <h3 class="section-toggle">
+                                Basic Information
+                                <i class="fas fa-chevron-down"></i>
+                            </h3>
+                            <div class="section-content">
+                                <div class="input-group">
+                                    <label for="profilePicture"
+                                        >Profile Picture:</label
+                                    >
+                                    <input
+                                        type="file"
+                                        id="profilePicture"
+                                        name="profilePicture"
+                                        accept="image/*"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="name">Name:</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        required
+                                        minlength="2"
+                                        maxlength="50"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="profession">Profession:</label>
+                                    <input
+                                        type="text"
+                                        id="profession"
+                                        name="profession"
+                                        required
+                                        minlength="2"
+                                        maxlength="50"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="email">Email:</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        required
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="phone">Phone:</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        pattern="[0-9]{11}"
+                                        title="Phone number must be 10 digits"
+                                        required
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="location">Location:</label>
+                                    <input
+                                        type="text"
+                                        id="location"
+                                        name="location"
+                                        required
+                                        minlength="2"
+                                        maxlength="100"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="website">Website:</label>
+                                    <input
+                                        type="url"
+                                        id="website"
+                                        name="website"
+                                        required
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="summary"
+                                        >Professional Summary:</label
+                                    >
+                                    <textarea
+                                        id="summary"
+                                        name="summary"
+                                        required
+                                        minlength="10"
+                                        maxlength="1000"
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-toggle">
+                                Education <i class="fas fa-chevron-down"></i>
+                            </h3>
+                            <div class="section-content">
+                                <div class="input-group">
+                                    <label for="educationDegree">Degree:</label>
+                                    <input
+                                        type="text"
+                                        id="educationDegree"
+                                        name="educationDegree"
+                                        required
+                                        minlength="2"
+                                        maxlength="100"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="educationSchool">School:</label>
+                                    <input
+                                        type="text"
+                                        id="educationSchool"
+                                        name="educationSchool"
+                                        required
+                                        minlength="2"
+                                        maxlength="100"
+                                    />
+                                </div>
+                                <div class="input-group">
+                                    <label for="educationDate">Date:</label>
+                                    <input
+                                        type="date"
+                                        id="educationDate"
+                                        name="educationDate"
+                                        required
+                                        pattern="\d{4}-\d{2}-\d{2}"
+                                        title="Date must be in YYYY-MM-DD format"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-toggle">
+                                Work Experience
+                                <i class="fas fa-chevron-down"></i>
+                            </h3>
+                            <div class="section-content">
+                                <div id="workExperienceInputs"></div>
+                                <button
+                                    type="button"
+                                    onclick="addExperience()"
+                                    class="add-button"
+                                >
+                                    Add Experience
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-toggle">
+                                Skills <i class="fas fa-chevron-down"></i>
+                            </h3>
+                            <div class="section-content">
+                                <div id="skillsInputs"></div>
+                                <button
+                                    type="button"
+                                    onclick="addSkill()"
+                                    class="add-button"
+                                >
+                                    Add Skill
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-button">
+                            Update Resume
+                        </button>
+                    </form>
+                </div>
+
+                <div id="resume" class="container"></div>
             </div>
-        </header>
+        </div>
 
-        <main>
-            <section class="contact">
-                <ul>
-                    <li><i class="fas fa-envelope"></i>growwithtalha@outlook.com</li>
-                    <li><i class="fas fa-phone"></i> (123) 456-7890</li>
-                    <li><i class="fas fa-map-marker-alt"></i> City, State</li>
-                    <li><i class="fas fa-globe"></i> <a href="https://growwithtalha.vercel.app">growwithtalha.vercel.app</a></li>
-                </ul>
-            </section>
-
-            <section class="summary">
-                <h2>Professional Summary</h2>
-                <p>Experienced web developer with a strong background in front-end and back-end technologies. Passionate about creating responsive and user-friendly web applications.</p>
-            </section>
-
-            <section class="experience">
-                <h2>Work Experience</h2>
-                <div class="job" id="job-template">
-                    <div class="job-header" id="job-header-template">
-                        <h3>Senior Web Developer</h3>
-                        <p class="company">Tech Solutions Inc.</p>
-                    </div>
-                    <p class="date" id="job-date-template">January 2018 - Present</p>
-                    <ul id="job-description-template">
-                        <li id="job-description-point">Developed and maintained responsive websites for various clients</li>
-                        <li id="job-description-point">Collaborated with design team to implement user-friendly interfaces</li>
-                        <li id="job-description-point">Optimized website performance and improved load times by 40%</li>
-                    </ul>
-                </div>
-                <div class="job">
-                    <div class="job-header" id="job-header-template">
-                        <h3>Junior Web Developer</h3>
-                        <p class="company">Digital Creations LLC</p>
-                    </div>
-                    <p class="date" id="job-date-template">June 2015 - December 2017</p>
-                    <ul id="job-description-template">
-                        <li id="job-description-point">Assisted in the development of e-commerce platforms</li>
-                        <li>Implemented responsive designs using HTML, CSS, and JavaScript</li>
-                        <li>Conducted code reviews and provided feedback to team members</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section class="education" id="education-template">
-                <h2>Education</h2>
-                <div class="degree" id="degree-template">
-                    <h3>Bachelor of Science in Computer Science</h3>
-                    <p class="school" id="school-template">University of Technology</p>
-                    <p class="date" id="date-template">Graduated: May 2015</p>
-                </div>
-            </section>
-
-            <section class="skills">
-                <h2>Skills</h2>
-                <ul id="skills-template">
-                    <li id="skills-point">HTML5</li>
-                    <li id="skills-point">CSS3</li>
-                    <li id="skills-point">JavaScript</li>
-                    <li id="skills-point">React</li>
-                    <li id="skills-point">Node.js</li>
-                    <li id="skills-point">SQL</li>
-                    <li id="skills-point">Git</li>
-                    <li id="skills-point">Responsive Design</li>
-                </ul>
-            </section>
-        </main>
-    </div>
-
-    <script src="./dist/js/main.js">
-
-    </script>
-</body>
+        <script src="./dist/js/main.js" type="module"></script>
+    </body>
 </html>

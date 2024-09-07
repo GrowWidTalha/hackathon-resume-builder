@@ -1,12 +1,16 @@
 {
     "compilerOptions": {
-      "target": "es5",                        // Compile to ES5 for broader browser support
-      "module": "commonjs",                   // Use CommonJS module system
-      "outDir": "./dist/js",                  // Output directory for compiled JS
-      "rootDir": "./src/ts",                  // Directory for TypeScript files
-      "strict": true,                         // Enable strict type-checking options
-      "esModuleInterop": true,                // Enables emit interoperability between CommonJS and ES Modules
+      "target": "es5",                   // You can set this to 'es5' or higher if needed
+      "module": "es6",                   // Use 'es6' or 'esnext' for ES Modules
+      "outDir": "./dist/js",             // Output directory for compiled JavaScript files
+      "rootDir": "./src/ts",             // Directory containing TypeScript files
+      "strict": true,                    // Enable strict type-checking
+      "esModuleInterop": true,           // Allows default imports from CommonJS modules
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true,
+      "moduleResolution": "node",        // Use Node's module resolution strategy
+      "allowSyntheticDefaultImports": true // Allow default imports from modules with no default export
     },
-    "include": ["src/ts/**/*"],               // Include all TS files in src/ts folder
-    "exclude": ["node_modules"]               // Exclude node_modules
+    "include": ["src/ts/**/*"],          // Include all TypeScript files in src/ts folder
+    "exclude": ["node_modules"]          // Exclude node_modules
   }
