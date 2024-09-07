@@ -467,3 +467,62 @@ a:hover {
     font-size: 1rem;
     font-weight: bold;
 }
+
+/* removable */
+/* Ensure the icon is not interactive and properly positioned */
+.edit-icon {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    cursor: default;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    visibility: hidden; /* Hidden by default, visible on hover */
+}
+
+/* Container for editable elements */
+.editable-container {
+    position: relative;
+    padding-right: 2rem; /* Add space for the icon */
+}
+
+/* Make the icon visible when hovering over contenteditable elements */
+.editable-container:hover .edit-icon {
+    visibility: visible;
+}
+
+/* Styling for contenteditable elements */
+/* [contenteditable="true"] {
+    border: 1px dashed transparent;
+    border: 1px dashed #ccc;
+    padding: 2px;
+    margin: 0;
+    outline: none;
+} */
+[contenteditable="true"]:hover {
+    border: 1px dashed #ccc;
+}
+
+[contenteditable]:focus {
+    border: 1px solid var(--primary-color);
+    /* Optional: background-color: #fff3e0; */
+}
+
+/* [contenteditable="true"]::before {
+    content: attr(data-placeholder);
+    /* color: #aaa; */
+
+[contenteditable="true"]:empty::before {
+    content: attr(data-placeholder);
+    /* color: #aaa; */
+}
+*/ .header-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}

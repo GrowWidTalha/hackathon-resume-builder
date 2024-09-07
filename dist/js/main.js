@@ -1,6 +1,5 @@
-var _a, _b;
+var _a;
 import { generateResumeTemplate } from './templates.js';
-// Mock data (initial state)
 var resumeData = {
     name: 'John Doe',
     profession: 'Full Stack Developer',
@@ -23,27 +22,136 @@ var resumeData = {
     ],
     education: {
         degree: 'Bachelor of Science in Computer Science',
-        school: 'University of Example',
-        date: 'Graduated: May 2016'
+        school: 'University of Technology',
+        date: 'Graduated May 2018'
     },
-    skills: ['HTML5', 'CSS3', 'JavaScript']
+    skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'SQL']
 };
-// Load data from local storage or use the default mock data
 function loadResumeData() {
     var savedData = localStorage.getItem('resumeData');
     if (savedData) {
         resumeData = JSON.parse(savedData);
         // Ensure picture is handled as a data URL
-        if (resumeData.picture) {
+        if (resumeData.picture && typeof resumeData.picture === 'string') {
             resumeData.picture = resumeData.picture;
         }
     }
 }
-// Save resume data to local storage
 function saveResumeData() {
     localStorage.setItem('resumeData', JSON.stringify(resumeData));
 }
-// Render the form with the current resume data
+function updateResumeTemplate() {
+    var resumeContainer = document.getElementById('resume');
+    if (resumeContainer) {
+        resumeContainer.innerHTML = generateResumeTemplate(resumeData);
+        addEditableListeners();
+    }
+}
+function addEditableListeners() {
+    var editableElements = document.querySelectorAll('[data-field]');
+    editableElements.forEach(function (element) {
+        element.setAttribute('contenteditable', 'true');
+        element.addEventListener('blur', handleEdit);
+        // @ts-ignore
+        element.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                e.target.blur();
+            }
+        });
+    });
+}
+function handleEdit(e) {
+    var target = e.target;
+    var field = target.getAttribute('data-field');
+    if (field) {
+        updateResumeField(field, target.textContent || '');
+        debouncedUpdateResumeTemplate();
+    }
+}
+var debouncedUpdateResumeTemplate = debounce(function () {
+    updateResumeTemplate();
+}, 500); // Adjust the delay time as needed
+function updateResumeField(field, value) {
+    var keys = field.split('.');
+    var obj = resumeData;
+    for (var i = 0; i < keys.length - 1; i++) {
+        // @ts-ignore
+        if (keys[i].includes('[')) {
+            var _a = keys[i].split('['), arrayName = _a[0], indexStr = _a[1];
+            var index = parseInt(indexStr.replace(']', ''), 10);
+            obj = obj[arrayName][index];
+        }
+        else {
+            obj = obj[keys[i]];
+        }
+    }
+    var lastKey = keys[keys.length - 1];
+    // @ts-ignore
+    if (lastKey.includes('[')) {
+        var _b = lastKey.split('['), arrayName = _b[0], indexStr = _b[1];
+        var index = parseInt(indexStr.replace(']', ''), 10);
+        obj[arrayName][index] = value;
+    }
+    else {
+        obj[lastKey] = value;
+    }
+    saveResumeData();
+}
+function addExperience() {
+    resumeData.workExperience.push({
+        title: 'New Position',
+        company: 'Company Name',
+        date: 'Start Date - End Date',
+        responsibilities: ['Responsibility 1']
+    });
+    renderForm();
+    saveResumeData();
+    updateResumeTemplate();
+}
+function addSkill() {
+    resumeData.skills.push('New Skill');
+    renderForm();
+    saveResumeData();
+    updateResumeTemplate();
+}
+function initializeForm() {
+    var _a, _b;
+    loadResumeData();
+    renderForm();
+    updateResumeTemplate();
+    // Add event listeners for editable elements
+    document.addEventListener('input', handleEdit);
+    (_a = document.getElementById('addExperience')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', addExperience);
+    (_b = document.getElementById('addSkill')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', addSkill);
+    var form = document.getElementById('resumeForm');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(form);
+        // Update resumeData with basic information
+        resumeData.name = formData.get('name') || '';
+        resumeData.profession = formData.get('profession') || '';
+        resumeData.email = formData.get('email') || '';
+        resumeData.phone = formData.get('phone') || '';
+        resumeData.location = formData.get('location') || '';
+        resumeData.website = formData.get('website') || '';
+        resumeData.summary = formData.get('summary') || '';
+        // Update education
+        resumeData.education.degree = formData.get('educationDegree') || '';
+        resumeData.education.school = formData.get('educationSchool') || '';
+        resumeData.education.date = formData.get('educationDate') || '';
+        saveResumeData();
+        updateResumeTemplate();
+    });
+}
+document.querySelectorAll('.section-toggle').forEach(function (toggle) {
+    toggle.addEventListener('click', toggleFormSection);
+});
+var toggleFormButton = document.getElementById('toggleForm');
+toggleFormButton === null || toggleFormButton === void 0 ? void 0 : toggleFormButton.addEventListener('click', function () {
+    var formContainer = document.getElementById('form');
+    formContainer === null || formContainer === void 0 ? void 0 : formContainer.classList.toggle('hidden');
+});
 function renderForm() {
     // Render basic information
     Object.keys(resumeData).forEach(function (key) {
@@ -93,144 +201,70 @@ function renderForm() {
         skillsInputs.innerHTML = '';
         resumeData.skills.forEach(function (skill, index) {
             skillsInputs.innerHTML += createSkillField(index, skill);
-            var skillInput = document.getElementById("skill".concat(index));
-            skillInput.value = skill;
-            // Add event listener for real-time updates
-            skillInput.addEventListener('input', function (e) {
-                updateSkill(index, e.target.value);
-            });
         });
     }
 }
-// Create HTML for experience fields
 function createExperienceField(index) {
-    return "\n        <div class=\"work-experience-group\" id=\"experience".concat(index, "\">\n            <div class=\"input-group\">\n                <label for=\"experienceTitle").concat(index, "\">Title:</label>\n                <input type=\"text\" id=\"experienceTitle").concat(index, "\" name=\"experienceTitle").concat(index, "\">\n            </div>\n            <div class=\"input-group\">\n                <label for=\"experienceCompany").concat(index, "\">Company:</label>\n                <input type=\"text\" id=\"experienceCompany").concat(index, "\" name=\"experienceCompany").concat(index, "\">\n            </div>\n            <div class=\"input-group\">\n                <label for=\"experienceDate").concat(index, "\">Date:</label>\n                <input type=\"text\" id=\"experienceDate").concat(index, "\" name=\"experienceDate").concat(index, "\">\n            </div>\n            <div class=\"input-group\">\n                <label for=\"experienceResponsibilities").concat(index, "\">Responsibilities (comma separated):</label>\n                <textarea id=\"experienceResponsibilities").concat(index, "\" name=\"experienceResponsibilities").concat(index, "\"></textarea>\n            </div>\n            <button type=\"button\" onclick=\"deleteExperience(").concat(index, ")\" class=\"delete-button\">Delete</button>\n        </div>\n    ");
+    return "\n        <div class=\"work-experience-group\" id=\"experience".concat(index, "\">\n            <div class=\"input-group\">\n                <label for=\"experienceTitle").concat(index, "\">Title:</label>\n                <input type=\"text\" id=\"experienceTitle").concat(index, "\" name=\"experienceTitle").concat(index, "\">\n            </div>\n            <div class=\"input-group\">\n                <label for=\"experienceCompany").concat(index, "\">Company:</label>\n                <input type=\"text\" id=\"experienceCompany").concat(index, "\" name=\"experienceCompany").concat(index, "\">\n            </div>\n            <div class=\"input-group\">\n                <label for=\"experienceDate").concat(index, "\">Date:</label>\n                <input type=\"text\" id=\"experienceDate").concat(index, "\" name=\"experienceDate").concat(index, "\">\n            </div>\n            <div class=\"input-group\">\n                <label for=\"experienceResponsibilities").concat(index, "\">Responsibilities:</label>\n                <textarea id=\"experienceResponsibilities").concat(index, "\" name=\"experienceResponsibilities").concat(index, "\"></textarea>\n            </div>\n            <button type=\"button\" onclick=\"deleteExperience(").concat(index, ")\" class=\"delete-button\">Delete</button>\n        </div>\n    ");
 }
-// Create HTML for skill fields
 function createSkillField(index, skill) {
-    return "\n        <div class=\"skill-group\" id=\"skillGroup".concat(index, "\">\n            <div class=\"input-group\">\n                <label for=\"skill").concat(index, "\">Skill:</label>\n                <input type=\"text\" id=\"skill").concat(index, "\" name=\"skill").concat(index, "\" value=\"").concat(skill ? skill : "", "\">\n            </div>\n            <button type=\"button\" onclick=\"deleteSkill(").concat(index, ")\" class=\"delete-button\">Delete</button>\n        </div>\n    ");
-}
-// Update functions for real-time synchronization
-function updateSkill(index, value) {
-    resumeData.skills[index] = value;
-    saveResumeData();
-    updateResumeTemplate();
+    return "\n        <div class=\"skill-group\" id=\"skillGroup".concat(index, "\">\n            <div class=\"input-group\">\n                <label for=\"skill").concat(index, "\">Skill:</label>\n                <input type=\"text\" id=\"skill").concat(index, "\" name=\"skill").concat(index, "\" value=\"").concat(skill || '', "\">\n            </div>\n            <button type=\"button\" onclick=\"deleteSkill(").concat(index, ")\" class=\"delete-button\">Delete</button>\n        </div>\n    ");
 }
 function updateExperienceField(index, field, value) {
-    resumeData.workExperience[index][field] = value;
-    saveResumeData();
-    updateResumeTemplate();
-}
-// Functions to add and delete skills and experiences
-function addExperience() {
-    resumeData.workExperience.push({
-        title: '',
-        company: '',
-        date: '',
-        responsibilities: []
-    });
-    renderForm();
-    saveResumeData();
-}
-function deleteExperience(index) {
-    resumeData.workExperience.splice(index, 1);
-    renderForm();
-    saveResumeData();
-}
-function addSkill() {
-    resumeData.skills.push('');
-    renderForm();
-    saveResumeData();
-}
-function deleteSkill(index) {
-    resumeData.skills.splice(index, 1);
-    renderForm();
-    saveResumeData();
-}
-// Update resume template with current data
-function updateResumeTemplate() {
-    var resumeTemplate = generateResumeTemplate(resumeData);
-    var resumeContainer = document.getElementById('resume');
-    if (resumeContainer) {
-        resumeContainer.innerHTML = resumeTemplate;
-    }
-}
-// Initialize form on document ready
-function initializeForm() {
-    loadResumeData(); // Load data from local storage
-    renderForm(); // Render form with current data
-    updateResumeTemplate();
-    var form = document.getElementById('resumeForm');
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var formData = new FormData(form);
-        // Update resumeData with basic information
-        resumeData.name = formData.get('name');
-        resumeData.profession = formData.get('profession');
-        resumeData.email = formData.get('email');
-        resumeData.phone = formData.get('phone');
-        resumeData.location = formData.get('location');
-        resumeData.website = formData.get('website');
-        resumeData.summary = formData.get('summary');
-        // Update education data
-        resumeData.education.degree = document.getElementById('educationDegree').value;
-        resumeData.education.school = document.getElementById('educationSchool').value;
-        resumeData.education.date = document.getElementById('educationDate').value;
-        // Update work experience data
-        resumeData.workExperience = [];
-        document.querySelectorAll('.work-experience-group').forEach(function (group, index) {
-            var title = group.querySelector("#experienceTitle".concat(index)).value;
-            var company = group.querySelector("#experienceCompany".concat(index)).value;
-            var date = group.querySelector("#experienceDate".concat(index)).value;
-            var responsibilities = group.querySelector("#experienceResponsibilities".concat(index)).value.split(',').map(function (r) { return r.trim(); });
-            resumeData.workExperience.push({
-                title: title,
-                company: company,
-                date: date,
-                responsibilities: responsibilities
-            });
-        });
-        // Update skills data
-        resumeData.skills = [];
-        document.querySelectorAll('.skill-group').forEach(function (group, index) {
-            var skill = group.querySelector("#skill".concat(index)).value;
-            resumeData.skills.push(skill);
-        });
+    if (index >= 0 && index < resumeData.workExperience.length) {
+        var experience = resumeData.workExperience[index];
+        experience[field] = value;
         saveResumeData();
         updateResumeTemplate();
-    });
-    document.querySelectorAll('.section-toggle').forEach(function (toggle) {
-        toggle.addEventListener('click', toggleFormSection);
-    });
-    var toggleFormButton = document.getElementById('toggleForm');
-    toggleFormButton === null || toggleFormButton === void 0 ? void 0 : toggleFormButton.addEventListener('click', function () {
-        var formContainer = document.getElementById('form');
-        formContainer === null || formContainer === void 0 ? void 0 : formContainer.classList.toggle('hidden');
-    });
-}
-// Toggle form sections
-function toggleFormSection(event) {
-    var _a, _b;
-    var target = event.target;
-    if (target.classList.contains('section-toggle')) {
-        var content = target.nextElementSibling;
-        content.style.display = content.style.display === 'none' ? 'block' : 'none';
-        (_a = target.querySelector('i')) === null || _a === void 0 ? void 0 : _a.classList.toggle('fa-chevron-down');
-        (_b = target.querySelector('i')) === null || _b === void 0 ? void 0 : _b.classList.toggle('fa-chevron-up');
     }
 }
-// Initialize the form on page load
-document.addEventListener('DOMContentLoaded', initializeForm);
-window.addExperience = addExperience;
-window.deleteExperience = deleteExperience;
-window.addSkill = addSkill;
-window.deleteSkill = deleteSkill;
-(_a = document.getElementById('color')) === null || _a === void 0 ? void 0 : _a.addEventListener('change', function (e) {
-    var color = e.target.value;
-    var roottheme = document.querySelector(':root');
-    roottheme.style.setProperty('--primary-color', color);
+function updateSkill(index, value) {
+    if (index >= 0 && index < resumeData.skills.length) {
+        resumeData.skills[index] = value;
+        saveResumeData();
+        updateResumeTemplate();
+    }
+}
+function deleteExperience(index) {
+    if (index >= 0 && index < resumeData.workExperience.length) {
+        resumeData.workExperience.splice(index, 1);
+        renderForm();
+        saveResumeData();
+        updateResumeTemplate();
+    }
+}
+function deleteSkill(index) {
+    if (index >= 0 && index < resumeData.skills.length) {
+        resumeData.skills.splice(index, 1);
+        renderForm();
+        saveResumeData();
+        updateResumeTemplate();
+    }
+}
+function debounce(func, wait) {
+    var timeout = null;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var context = this;
+        if (timeout !== null) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(function () { return func.apply(context, args); }, wait);
+    };
+}
+document.addEventListener('DOMContentLoaded', function () {
+    initializeForm();
 });
-(_b = document.getElementById('profilePicture')) === null || _b === void 0 ? void 0 : _b.addEventListener('change', function (e) {
+document.querySelectorAll('[contenteditable="true"]').forEach(function (element) {
+    element.addEventListener('input', function () {
+        var sanitizedValue = (element.textContent || '').replace(/[^a-zA-Z0-9\s]/g, ''); // Allow only alphanumeric characters and spaces
+        element.textContent = sanitizedValue;
+    });
+});
+(_a = document.getElementById('profilePicture')) === null || _a === void 0 ? void 0 : _a.addEventListener('change', function (e) {
     var fileInput = e.target;
     if (fileInput.files && fileInput.files[0]) {
         var file = fileInput.files[0];
@@ -245,3 +279,15 @@ window.deleteSkill = deleteSkill;
         reader_1.readAsDataURL(file);
     }
 });
+function toggleFormSection(event) {
+    var target = event.target;
+    if (target.classList.contains('section-toggle')) {
+        var content = target.nextElementSibling;
+        if (content) {
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+            var icon = target.querySelector('i');
+            icon === null || icon === void 0 ? void 0 : icon.classList.toggle('fa-chevron-down');
+            icon === null || icon === void 0 ? void 0 : icon.classList.toggle('fa-chevron-up');
+        }
+    }
+}
