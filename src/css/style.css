@@ -3,7 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+:root{
+    --primary-color: #3498db;
+}
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
@@ -33,7 +35,7 @@ h1 {
 h2 {
     font-size: 1.5rem;
     color: #2c3e50;
-    border-bottom: 2px solid #3498db;
+    border-bottom: 2px solid var(--primary-color);
     padding-bottom: 5px;
     margin-top: 30px;
 }
@@ -49,7 +51,7 @@ p {
 
 /* Header */
 header {
-    background-color: #3498db;
+    background-color: var(--primary-color);
     color: #fff;
     padding: 40px;
     text-align: center;
@@ -86,7 +88,7 @@ section {
 
 .contact i {
     margin-right: 10px;
-    color: #3498db;
+    color: var(--primary-color);
 }
 
 /* Lists */
@@ -102,7 +104,7 @@ ul {
 }
 
 .skills li {
-    background-color: #3498db;
+    background-color: var(--primary-color);
     color: #fff;
     padding: 5px 15px;
     border-radius: 20px;
@@ -122,7 +124,7 @@ ul {
 
 .company, .school {
     font-weight: bold;
-    color: #3498db;
+    color: var(--primary-color);
 }
 
 .date {
@@ -133,13 +135,13 @@ ul {
 
 /* Links */
 a {
-    color: #3498db;
+    color: var(--primary-color);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #2980b9;
+    color:var(--primary-color);
 }
 
 /* Responsive design */
