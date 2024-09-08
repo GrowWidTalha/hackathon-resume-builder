@@ -451,7 +451,7 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
         }
 
         const canvas = await html2canvas(element);
-        if (typeof window.jspdf === "undefined") {
+        if (typeof window.jsPDF === "undefined") {
             throw new Error("jsPDF is not loaded");
         }
 
