@@ -3,9 +3,10 @@
   "version": "1.0.0",
 "type": "module",
   "scripts": {
-    "build": "tsc && mkdir -p dist/css dist/js && cp src/css/style.css dist/css && cp index.html dist && cp -r public dist/public && cp src/js/*.js dist/js"
+    "build": "npx rimraf dist && npx mkdirp dist/js && npx mkdirp dist/css && tsc && npx copyfiles src/js/*.js dist/js && npx copyfiles src/css/style.css dist/css && npx copyfiles index.html dist && npx copyfiles public/**/* dist/public"
   },
   "devDependencies": {
+"rimraf": "^5.0.0",
     "typescript": "^4.0.0",
     "mkdirp": "^1.0.4",
     "copyfiles": "^2.4.1"
