@@ -556,7 +556,7 @@ document.getElementById("showDialogButton")!.addEventListener("click", () => {
     }
 });
 
-// function showDialog(): void {
+ function showDialog(): void {
     const dialog = document.getElementById('templateDialog');
     if (dialog) {
         dialog.style.display = 'block';
