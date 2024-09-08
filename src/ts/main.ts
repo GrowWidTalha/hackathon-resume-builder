@@ -1,5 +1,7 @@
-import { generateResumeTemplate } from './templates.js';
+// Import necessary functions
+import { generateResumeTemplate, template2, template3, template4 } from './templates.js';
 
+// Define interfaces for resume data
 interface Education {
     degree: string;
     school: string;
@@ -27,6 +29,7 @@ interface ResumeData {
     picture?: string;
 }
 
+// Initialize resume data
 let resumeData: ResumeData = {
     name: 'John Doe',
     profession: 'Full Stack Developer',
@@ -55,6 +58,7 @@ let resumeData: ResumeData = {
     skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'SQL']
 };
 
+// Load resume data from localStorage
 function loadResumeData(): void {
     const savedData = localStorage.getItem('resumeData');
     if (savedData) {
@@ -66,10 +70,12 @@ function loadResumeData(): void {
     }
 }
 
+// Save resume data to localStorage
 function saveResumeData(): void {
     localStorage.setItem('resumeData', JSON.stringify(resumeData));
 }
 
+// Update resume template and render it
 function updateResumeTemplate(): void {
     const resumeContainer = document.getElementById('resume');
     if (resumeContainer) {
@@ -78,6 +84,7 @@ function updateResumeTemplate(): void {
     }
 }
 
+// Add event listeners for editable elements
 function addEditableListeners(): void {
     const editableElements = document.querySelectorAll('[data-field]');
     editableElements.forEach(element => {
@@ -93,6 +100,7 @@ function addEditableListeners(): void {
     });
 }
 
+// Handle editing of fields
 function handleEdit(e: Event): void {
     const target = e.target as HTMLElement;
     const field = target.getAttribute('data-field');
@@ -102,10 +110,12 @@ function handleEdit(e: Event): void {
     }
 }
 
+// Debounce function to limit update frequency
 const debouncedUpdateResumeTemplate = debounce(() => {
     updateResumeTemplate();
 }, 500); // Adjust the delay time as needed
 
+// Update a specific field in resume data
 function updateResumeField(field: string, value: string): void {
     const keys = field.split('.');
     let obj: any = resumeData;
@@ -131,6 +141,7 @@ function updateResumeField(field: string, value: string): void {
     saveResumeData();
 }
 
+// Add new work experience entry
 function addExperience(): void {
     resumeData.workExperience.push({
         title: 'New Position',
@@ -143,6 +154,7 @@ function addExperience(): void {
     updateResumeTemplate();
 }
 
+// Add new skill entry
 function addSkill(): void {
     resumeData.skills.push('New Skill');
     renderForm();
@@ -150,12 +162,12 @@ function addSkill(): void {
     updateResumeTemplate();
 }
 
+// Initialize form with existing data and setup event listeners
 function initializeForm(): void {
     loadResumeData();
     renderForm();
     updateResumeTemplate();
 
-    // Add event listeners for editable elements
     document.addEventListener('input', handleEdit);
 
     document.getElementById('addExperience')?.addEventListener('click', addExperience);
@@ -185,16 +197,7 @@ function initializeForm(): void {
     });
 }
 
-document.querySelectorAll('.section-toggle').forEach(toggle => {
-    toggle.addEventListener('click', toggleFormSection);
-});
-
-const toggleFormButton = document.getElementById('toggleForm');
-toggleFormButton?.addEventListener('click', () => {
-    const formContainer = document.getElementById('form');
-    formContainer?.classList.toggle('hidden');
-});
-
+// Render form fields based on resume data
 function renderForm(): void {
     // Render basic information
     Object.keys(resumeData).forEach(key => {
@@ -248,10 +251,14 @@ function renderForm(): void {
         skillsInputs.innerHTML = '';
         resumeData.skills.forEach((skill, index) => {
             skillsInputs.innerHTML += createSkillField(index, skill);
+            document.getElementById(`skill${index}`)?.addEventListener('input', (e) => {
+                updateSkillField(index, (e.target as HTMLInputElement).value);
+            });
         });
     }
 }
 
+// Create form fields for experience
 function createExperienceField(index: number): string {
     return `
         <div class="work-experience-group" id="experience${index}">
@@ -276,6 +283,7 @@ function createExperienceField(index: number): string {
     `;
 }
 
+// Create form fields for skills
 function createSkillField(index: number, skill: string): string {
     return `
         <div class="skill-group" id="skillGroup${index}">
@@ -288,6 +296,7 @@ function createSkillField(index: number, skill: string): string {
     `;
 }
 
+// Update a specific field in work experience
 function updateExperienceField(index: number, field: keyof WorkExperience, value: string | string[]): void {
     if (index >= 0 && index < resumeData.workExperience.length) {
         const experience = resumeData.workExperience[index];
@@ -297,7 +306,8 @@ function updateExperienceField(index: number, field: keyof WorkExperience, value
     }
 }
 
-function updateSkill(index: number, value: string): void {
+// Update a specific skill
+function updateSkillField(index: number, value: string): void {
     if (index >= 0 && index < resumeData.skills.length) {
         resumeData.skills[index] = value;
         saveResumeData();
@@ -305,6 +315,7 @@ function updateSkill(index: number, value: string): void {
     }
 }
 
+// Delete a work experience
 function deleteExperience(index: number): void {
     if (index >= 0 && index < resumeData.workExperience.length) {
         resumeData.workExperience.splice(index, 1);
@@ -314,6 +325,7 @@ function deleteExperience(index: number): void {
     }
 }
 
+// Delete a skill
 function deleteSkill(index: number): void {
     if (index >= 0 && index < resumeData.skills.length) {
         resumeData.skills.splice(index, 1);
@@ -323,44 +335,62 @@ function deleteSkill(index: number): void {
     }
 }
 
-function debounce<F extends (...args: any[]) => any>(func: F, wait: number): (...args: Parameters<F>) => void {
-    let timeout: ReturnType<typeof setTimeout> | null = null;
-    return function(this: ThisParameterType<F>, ...args: Parameters<F>) {
-        const context = this;
-        if (timeout !== null) {
-            clearTimeout(timeout);
-        }
-        timeout = setTimeout(() => func.apply(context, args), wait);
+// Helper function to create a debounced version of a function
+function debounce(func: Function, wait: number): Function {
+    let timeout: NodeJS.Timeout;
+    return function(this: any, ...args: any[]) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
     };
 }
 
+// Initialize everything on page load
+function initialize(): void {
+    initializeForm();
+}
+
+// Mount functions to the window object
+window.addExperience = addExperience;
+window.addSkill = addSkill;
+window.deleteSkill = deleteSkill;
+window.deleteExperience = deleteExperience;
+window.initialize = initialize;
+
+// Run initialization
+initialize();
+
+// Add these event listeners
 document.addEventListener('DOMContentLoaded', () => {
     initializeForm();
-});
 
-document.querySelectorAll('[contenteditable="true"]').forEach(element => {
-    element.addEventListener('input', () => {
-        const sanitizedValue = (element.textContent || '').replace(/[^a-zA-Z0-9\s]/g, ''); // Allow only alphanumeric characters and spaces
-        element.textContent = sanitizedValue;
+    document.querySelectorAll('.section-toggle').forEach(toggle => {
+        toggle.addEventListener('click', toggleFormSection);
     });
-});
 
-document.getElementById('profilePicture')?.addEventListener('change', (e: Event) => {
-    const fileInput = e.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files[0]) {
-        const file = fileInput.files[0];
-        const reader = new FileReader();
+    document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+        element.addEventListener('input', () => {
+            const sanitizedValue = (element.textContent || '').replace(/[^a-zA-Z0-9\s]/g, '');
+            element.textContent = sanitizedValue;
+        });
+    });
 
-        reader.onload = () => {
-            const imageDataUrl = reader.result as string;
-            resumeData.picture = imageDataUrl;
-            saveResumeData();
-            renderForm();
-            updateResumeTemplate();
-        };
+    document.getElementById('profilePicture')?.addEventListener('change', (e: Event) => {
+        const fileInput = e.target as HTMLInputElement;
+        if (fileInput.files && fileInput.files[0]) {
+            const file = fileInput.files[0];
+            const reader = new FileReader();
 
-        reader.readAsDataURL(file);
-    }
+            reader.onload = () => {
+                const imageDataUrl = reader.result as string;
+                resumeData.picture = imageDataUrl;
+                saveResumeData();
+                renderForm();
+                updateResumeTemplate();
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
 });
 
 function toggleFormSection(event: Event) {
@@ -374,4 +404,286 @@ function toggleFormSection(event: Event) {
             icon?.classList.toggle('fa-chevron-up');
         }
     }
+}
+
+// update primary color
+document.getElementById('color')?.addEventListener('change', (e) => {
+    const color = (e.target as HTMLInputElement).value;
+    const roottheme = document.querySelector(':root') as HTMLElement;
+    roottheme.style.setProperty('--primary-color', color);
+});
+
+// Initialize Appwrite client
+const sdk = new Appwrite.Client();
+sdk.setEndpoint("https://cloud.appwrite.io/v1") // Your Appwrite endpoint
+   .setProject("66dd215600334796bc22"); // Your project ID
+const storage = new Appwrite.Storage(sdk);
+
+// Helper function to display the modal
+
+
+// Handle Generate PDF button click
+document.getElementById("generatePDF")!.addEventListener("click", async () => {
+    const loader = document.getElementById("loader")!;
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    const uploadButton = document.getElementById("uploadButton")!;
+    const shareableLink = document.getElementById("shareableLink") as HTMLInputElement;
+    const copyLinkButton = document.getElementById("copyLinkButton")!;
+    const uploadStatus = document.getElementById("uploadStatus")!;
+
+    loader.style.display = "block";
+    uploadButton.style.display = "none";
+    shareableLink.style.display = "none";
+    copyLinkButton.style.display = "none";
+    uploadStatus.style.display = "none";
+
+    try {
+        const element = document.querySelector(".resume-wrapper")!;
+        const username = (document.getElementById("name") as HTMLInputElement).value || "user";
+        const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+        const fileName = `${username}-resume-${timestamp}.pdf`;
+
+        if (typeof html2canvas === "undefined") {
+            throw new Error("html2canvas is not loaded");
+        }
+
+        const canvas = await html2canvas(element);
+        if (typeof window.jspdf === "undefined") {
+            throw new Error("jsPDF is not loaded");
+        }
+
+        const { jsPDF } = window.jspdf;
+
+// Set the PDF to A4 size
+const pdf = new jsPDF({
+  orientation: "portrait",
+  unit: "mm",
+  format: "a4"
+});
+
+const imgData = canvas.toDataURL("image/png");
+const imgProps = pdf.getImageProperties(imgData);
+
+// Calculate scaling to fit the image within A4 dimensions while maintaining aspect ratio
+const pdfWidth = pdf.internal.pageSize.getWidth();
+const pdfHeight = pdf.internal.pageSize.getHeight();
+const widthRatio = pdfWidth / imgProps.width;
+const heightRatio = pdfHeight / imgProps.height;
+const scale = Math.min(widthRatio, heightRatio);
+
+const scaledWidth = imgProps.width * scale;
+const scaledHeight = imgProps.height * scale;
+
+// Center the image on the page
+const x = (pdfWidth - scaledWidth) / 2;
+const y = (pdfHeight - scaledHeight) / 2;
+
+// Add the image to the PDF
+pdf.addImage(imgData, "PNG", x, y, scaledWidth, scaledHeight);
+
+// Save the PDF
+pdf.save(fileName);
+
+        const file = new File([pdf.output("blob")], fileName, { type: "application/pdf" });
+        const result = await storage.createFile(
+            "66dd217e00339b050ccd", // Replace with your bucket ID
+            Appwrite.ID.unique(),
+            file
+        );
+
+        const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/66dd217e00339b050ccd/files/${result.$id}/view?project=66dd215600334796bc22`;
+        localStorage.setItem("resumePDFUrl", fileUrl);
+
+        loader.style.display = "none";
+        uploadButton.style.display = "block";
+        shareableLink.style.display = "block";
+        copyLinkButton.style.display = "block";
+        uploadStatus.style.display = "block";
+        shareableLink.value = fileUrl;
+        uploadStatus.innerText = "File uploaded successfully!";
+
+    } catch (error) {
+        console.error("Error:", error);
+        loader.style.display = "none";
+        uploadStatus.style.display = "block";
+        uploadStatus.innerText = "An error occurred. Please try again.";
+    }
+});
+
+// Handle Upload PDF button click
+document.getElementById("uploadButton")!.addEventListener("click", async () => {
+    const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+    const file = fileInput.files ? fileInput.files[0] : null;
+    const uploadStatus = document.getElementById("uploadStatus")!;
+    const shareableLink = document.getElementById("shareableLink") as HTMLInputElement;
+
+    if (file) {
+        try {
+            const result = await storage.createFile(
+                "66dd217e00339b050ccd", // Replace with your bucket ID
+                Appwrite.ID.unique(),
+                file
+            );
+            const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/66dd217e00339b050ccd/files/${result.$id}/view?project=66dd215600334796bc22`;
+            localStorage.setItem("resumePDFUrl", fileUrl);
+
+            shareableLink.value = fileUrl;
+            uploadStatus.innerText = "File uploaded successfully!";
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            uploadStatus.innerText = "Error uploading file.";
+        }
+    }
+});
+
+// Handle Copy Link button click
+document.getElementById("copyLinkButton")!.addEventListener("click", () => {
+    const shareableLink = document.getElementById("shareableLink") as HTMLInputElement;
+    shareableLink.select();
+    document.execCommand("copy");
+    alert("Link copied to clipboard!");
+});
+
+// Initialize modal and handle visibility
+document.getElementById("showDialogButton")!.addEventListener("click", () => {
+    showPdfDialog()
+    const fileUrl = localStorage.getItem("resumePDFUrl");
+    if (fileUrl) {
+        const shareableLink = document.getElementById("shareableLink") as HTMLInputElement;
+        shareableLink.value = fileUrl;
+    }
+});
+
+// document.getElementById("openTemplateDialogButton")!.addEventListener("click", showPdfDialog);
+// document.getElementById("closeDialog")!.addEventListener("click", hidePdfDialog);
+
+// Show the dialog
+// Show the dialog
+function showDialog() {
+    document.getElementById('templateDialog')?.style.display = 'block';
+}
+
+// Close the dialog
+function closeDialog() {
+    document.getElementById('templateDialog')?.style.display = 'none';
+}
+
+// Handle template selection
+function selectTemplate(templateName: string) {
+    // Implement logic to switch templates based on selection
+    console.log(`Selected template: ${templateName}`);
+    // Call a function to apply the selected template to the resume
+    applyTemplate(templateName);
+    closeDialog();
+}
+
+
+// Attach event listeners
+document.getElementById('openTemplateDialogButton')?.addEventListener('click', showDialog);
+document.getElementById('closeDialogButton')?.addEventListener('click', closeDialog);
+const templateButtons = document.querySelectorAll('.template-button');
+
+templateButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const selectedTemplate = button.getAttribute('data-template');
+        applyTemplate(selectedTemplate);
+        document.getElementById0("templateDialog").style.display = 'none';
+    });
+});
+
+
+// Update these functions for the PDF dialog
+const showPdfDialog = () => {
+    document.getElementById("dialog").style.display = "block";
+};
+
+const hidePdfDialog = () => {
+    document.getElementById("dialog").style.display = "none";
+};
+
+// Add these functions for the template dialog
+const showTemplateDialog = () => {
+    document.getElementById("templateDialog").style.display = "block";
+};
+
+const hideTemplateDialog = () => {
+    document.getElementById("templateDialog").style.display = "none";
+};
+
+// Update event listeners
+document.getElementById("showDialogButton").addEventListener("click", showPdfDialog);
+document.getElementById("closeDialog").addEventListener("click", hidePdfDialog);
+document.getElementById("openTemplateDialogButton").addEventListener("click", showTemplateDialog);
+document.getElementById("closeTemplateDialog").addEventListener("click", hideTemplateDialog);
+
+// Add template selection S
+// const templateButtons = document.querySelectorAll('.template-button');
+// templateButtons.forEach(button => {
+//     button.addEventListener('click', () => {
+//         const selectedTemplate = button.getAttribute('data-template');
+//         applyTemplate(selectedTemplate);
+//         hideTemplateDialog();
+//     });
+// });
+function getResumeData(): ResumeData {
+    // Try to retrieve saved resume data from localStorage
+    const savedData = localStorage.getItem('resumeData');
+    if (savedData) {
+        // Parse and return the saved data if it exists
+        return JSON.parse(savedData) as ResumeData;
+    } else {
+        // If no saved data, return default resume data
+        return {
+            name: 'John Doe',
+            profession: 'Full Stack Developer',
+            email: 'johndoe@example.com',
+            phone: '(555) 123-4567',
+            location: 'City, State',
+            website: 'https://johndoe.com',
+            summary: 'Passionate full stack developer with 5 years of experience in building robust web applications.',
+            workExperience: [
+                {
+                    title: 'Senior Developer',
+                    company: 'Tech Innovations Inc.',
+                    date: 'March 2020 - Present',
+                    responsibilities: [
+                        'Lead development of client projects',
+                        'Mentor junior developers',
+                        'Optimize application performance'
+                    ]
+                }
+            ],
+            education: {
+                degree: 'Bachelor of Science in Computer Science',
+                school: 'University of Technology',
+                date: 'Graduated May 2018'
+            },
+            skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'SQL'],
+            picture: ''
+        };
+    }
+}
+
+
+function applyTemplate(templateName) {
+    const resumeData = getResumeData(); // Implement this function to get current resume data
+    let html;
+    switch (templateName) {
+        case 'template1':
+            html = generateResumeTemplate(resumeData);
+            break;
+        case 'template2':
+            html = template2(resumeData);
+            break;
+        case 'template3':
+            html = template3(resumeData);
+            break;
+        case 'template4':
+            html = template4(resumeData);
+            break;
+        default:
+            html = generateResumeTemplate(resumeData); // Default to template1
+    }
+    document.getElementById('resume').innerHTML = html;
+    updateResumeTemplate(); // Call this to ensure all editable fields are set up correctly
 }

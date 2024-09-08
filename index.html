@@ -16,10 +16,16 @@
             <div class="navbar-brand" contenteditable="true">
                 Resume Builder
             </div>
-            <button id="toggleForm" class="toggle-button">
-                Toggle Edit Form
-            </button>
+            <div>
+                <button id="toggleForm" class="toggle-button">
+                    Toggle Edit Form
+                </button>
+                <button id="showDialogButton" class="toggle-button">
+                    Generate
+                </button>
+            </div>
         </nav>
+        <!-- <button id="openTemplateDialogButton">Select Template</button> -->
 
         <div class="main-container">
             <div class="flex-container">
@@ -208,11 +214,42 @@
                         </button>
                     </form>
                 </div>
-
-                <div id="resume" class="container"></div>
+                <div class="resume-wrapper">
+                    <div id="resume" class="container"></div>
+                </div>
             </div>
         </div>
+        <div id="dialog" class="modal">
+            <div class="modal-content">
+                <span id="closeDialog" class="close">&times;</span>
+                <div id="modalContent">
+                    <button id="generatePDF" class="button">
+                        Generate and Upload PDF
+                    </button>
+                    <div id="loader" class="loader" style="display: none"></div>
+                    <input type="file" id="fileInput" style="display: none" />
+                    <button id="uploadButton" style="display: none">
+                        Upload PDF
+                    </button>
+                    <input
+                        type="text"
+                        id="shareableLink"
+                        readonly
+                        style="display: none"
+                    />
+                    <button id="copyLinkButton" style="display: none">
+                        Copy Link
+                    </button>
+                    <div id="uploadStatus" style="display: none"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Template Selection Dialog -->
 
+        <script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.0"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
         <script src="./dist/js/main.js" type="module"></script>
+        <script src="./dist/js/pdf.js" type="module"></script>
     </body>
 </html>
