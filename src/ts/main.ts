@@ -558,45 +558,7 @@ document.getElementById("showDialogButton")!.addEventListener("click", () => {
     }
 });
 
- function showDialog(): void {
-    const dialog = document.getElementById('templateDialog');
-    if (dialog) {
-        dialog.style.display = 'block';
-    } else {
-        console.error('Dialog element not found');
-    }
-}
-
-// Close the dialog
-function closeDialog(): void {
-    const dialog = document.getElementById('templateDialog');
-    if (dialog) {
-        dialog.style.display = 'none';
-    } else {
-        console.error('Dialog element not found');
-    }
-}
-
-// Handle template selection
-function selectTemplate(templateName: string) {
-    console.log(`Selected template: ${templateName}`);
-    applyTemplate(templateName);
-    closeDialog();
-}
-
-// Attach event listeners for template dialog
-document.getElementById('openTemplateDialogButton')?.addEventListener('click', showDialog);
-document.getElementById('closeDialogButton')?.addEventListener('click', closeDialog);
-const templateButtons = document.querySelectorAll('.template-button');
-
-templateButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const selectedTemplate = button.getAttribute('data-template')!;
-        applyTemplate(selectedTemplate);
-        closeDialog();
-    });
-});
-
+ 
 // PDF dialog functions
 const showPdfDialog = () => {
     document.getElementById("dialog")!.style.display = "block";
@@ -607,19 +569,11 @@ const hidePdfDialog = () => {
 };
 
 // Template dialog functions
-const showTemplateDialog = () => {
-    document.getElementById("templateDialog")!.style.display = "block";
-};
 
-const hideTemplateDialog = () => {
-    document.getElementById("templateDialog")!.style.display = "none";
-};
 
 // Update event listeners
 document.getElementById("showDialogButton")?.addEventListener("click", showPdfDialog);
 document.getElementById("closeDialog")?.addEventListener("click", hidePdfDialog);
-document.getElementById("openTemplateDialogButton")?.addEventListener("click", showTemplateDialog);
-document.getElementById("closeTemplateDialog")?.addEventListener("click", hideTemplateDialog);
 
 // Function to get resume data
 function getResumeData(): ResumeData {
