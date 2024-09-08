@@ -3,7 +3,7 @@
     "target": "ES6", // or "ES2015"
     "module": "commonjs",
     "lib": ["dom", "ES2015"], // Ensure ES2015 is included
-    "outDir": "./SRC/js",
+    "outDir": "./src/js",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
