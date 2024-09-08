@@ -1,4 +1,5 @@
 // Import necessary functions
+// Import necessary functions
 import { generateResumeTemplate, template2, template3, template4 } from './templates.js';
 
 // Define interfaces for resume data
@@ -90,7 +91,7 @@ function addEditableListeners(): void {
     editableElements.forEach(element => {
         element.setAttribute('contenteditable', 'true');
         element.addEventListener('blur', handleEdit);
-        // @ts-ignore
+        // @ts-ignore - TypeScript doesn't recognize the event type correctly here
         element.addEventListener('keydown', (e: KeyboardEvent) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -120,7 +121,7 @@ function updateResumeField(field: string, value: string): void {
     const keys = field.split('.');
     let obj: any = resumeData;
     for (let i = 0; i < keys.length - 1; i++) {
-        // @ts-ignore
+        // @ts-ignore - Dynamic access of nested properties
         if (keys[i].includes('[')) {
             const [arrayName, indexStr] = keys[i].split('[');
             const index = parseInt(indexStr.replace(']', ''), 10);
@@ -130,7 +131,7 @@ function updateResumeField(field: string, value: string): void {
         }
     }
     const lastKey = keys[keys.length - 1];
-    // @ts-ignore
+    // @ts-ignore - Dynamic access of nested properties
     if (lastKey.includes('[')) {
         const [arrayName, indexStr] = lastKey.split('[');
         const index = parseInt(indexStr.replace(']', ''), 10);
