@@ -1,8 +1,4 @@
-// Import necessary functions
-// Import necessary functions
-import Appwrite from 'appwrite';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
+
 import { generateResumeTemplate, template2, template3, template4 } from './templates.js';
 
 // Define interfaces for resume data
