@@ -3,7 +3,7 @@
   "version": "1.0.0",
 "type": "module",
   "scripts": {
-    "build": "tsc && mkdirp dist/css && copyfiles -u 1 src/css/style.css dist/css && copyfiles -u 0 index.html dist && copyfiles -u 1 public/**/* dist/public"
+    "build": "tsc && mkdir -p dist/css dist/js && cp src/css/style.css dist/css && cp index.html dist && cp -r public dist/public && cp src/js/*.js dist/js"
   },
   "devDependencies": {
     "typescript": "^4.0.0",
