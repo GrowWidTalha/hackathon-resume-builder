@@ -613,10 +613,14 @@ function getResumeData(): ResumeData {
 }
 
 // Apply template based on selection
-function applyTemplate(templateName: string) {
+function applyTemplate() {
     const resumeData = getResumeData();
     const html=  generateResumeTemplate(resumeData);
             
     document.getElementById('resume')!.innerHTML = html;
     updateResumeTemplate(); // Call this to ensure all editable fields are set up correctly
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    applyTemplate(); // Use your single template name here
+});
