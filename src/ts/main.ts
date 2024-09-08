@@ -455,7 +455,7 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
             throw new Error("jsPDF is not loaded");
         }
 
-        const { jsPDF } = window.jspdf;
+        const { jsPDF } = window.jsPDF;
 
         // Set the PDF to A4 size
         const pdf = new jsPDF({
