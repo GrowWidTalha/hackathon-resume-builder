@@ -3,7 +3,7 @@
   "version": "1.0.0",
 "type": "module",
   "scripts": {
-    "build": "npx rimraf dist && npx mkdirp dist/js && npx mkdirp dist/css && tsc && npx copyfiles src/js/main.js dist/js && npx copyfiles SRC/js/templates.js dist/js && npx copyfiles src/css/style.css dist/css && npx copyfiles index.html dist && npx copyfiles public/**/* dist/public"
+    "build": "rimraf dist && npx mkdirp dist/js dist/css && tsc && npx copyfiles src/css/style.css dist/css && npx copyfiles index.html dist && npx copyfiles -u 1 public/**/* dist/public"
   },
   "devDependencies": {
 "rimraf": "^5.0.0",
