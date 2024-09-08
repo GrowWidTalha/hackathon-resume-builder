@@ -1,6 +1,6 @@
 
 import { generateResumeTemplate, template2, template3, template4 } from './templates.js';
-
+alert("JavaScript is working")
 // Define interfaces for resume data
 interface Education {
     degree: string;
