@@ -369,6 +369,7 @@ initialize();
 // Add these event listeners
 document.addEventListener('DOMContentLoaded', () => {
     initializeForm();
+alert("JavaScript is working")
 
     document.querySelectorAll('.section-toggle').forEach(toggle => {
         toggle.addEventListener('click', toggleFormSection);
