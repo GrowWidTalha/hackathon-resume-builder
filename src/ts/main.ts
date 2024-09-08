@@ -451,13 +451,15 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
         }
 
         const canvas = await html2canvas(element);
+// @ts-ignore
         if (typeof window.jspdf === "undefined") {
             throw new Error("jspdf is not loaded");
         }
-
+// @ts-ignore
         const { jsPDF } = window.jspdf;
 
         // Set the PDF to A4 size
+// @ts-ignore
         const pdf = new jsPDF({
             orientation: "portrait",
             unit: "mm",
