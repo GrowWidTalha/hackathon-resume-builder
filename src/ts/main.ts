@@ -301,7 +301,8 @@ function createSkillField(index: number, skill: string): string {
 function updateExperienceField(index: number, field: keyof WorkExperience, value: string | string[]): void {
     if (index >= 0 && index < resumeData.workExperience.length) {
         const experience = resumeData.workExperience[index];
-        experience[field] = value as any;
+        // @ts-ignore
+        experience[field] = value;
         saveResumeData();
         updateResumeTemplate();
     }
@@ -351,10 +352,15 @@ function initialize(): void {
 }
 
 // Mount functions to the window object
+// @ts-ignore
 window.addExperience = addExperience;
+// @ts-ignore
 window.addSkill = addSkill;
+// @ts-ignore
 window.deleteSkill = deleteSkill;
+// @ts-ignore
 window.deleteExperience = deleteExperience;
+// @ts-ignore
 window.initialize = initialize;
 
 // Run initialization
@@ -406,7 +412,6 @@ function toggleFormSection(event: Event) {
         }
     }
 }
-
 // update primary color
 document.getElementById('color')?.addEventListener('change', (e) => {
     const color = (e.target as HTMLInputElement).value;
