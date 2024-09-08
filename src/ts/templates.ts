@@ -31,7 +31,7 @@ export function generateResumeTemplate(data: ResumeData): string {
     return `
         <header>
             <div class="header-content">
-                <img id="resumePicture" src="${data.picture || '../../public/default-profile.jpg'}" alt="Profile Picture">
+                <img id="resumePicture" src="${data.picture || '../public/default-profile.jpg'}" alt="Profile Picture">
                 <div class="header-text">
                     <h1 id="resumeName" data-field="name">${data.name}</h1>
                     <p id="resumeProfession" data-field="profession">${data.profession}</p>
