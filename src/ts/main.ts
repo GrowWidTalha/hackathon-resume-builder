@@ -615,23 +615,8 @@ function getResumeData(): ResumeData {
 // Apply template based on selection
 function applyTemplate(templateName: string) {
     const resumeData = getResumeData();
-    let html;
-    switch (templateName) {
-        case 'template1':
-            html = generateResumeTemplate(resumeData);
-            break;
-        case 'template2':
-            html = template2(resumeData);
-            break;
-        case 'template3':
-            html = template3(resumeData);
-            break;
-        case 'template4':
-            html = template4(resumeData);
-            break;
-        default:
-            html = generateResumeTemplate(resumeData); // Default to template1
-    }
-    document.getElementById('resume')!.innerHTML = html;
+    const html=  generateResumeTemplate(resumeData);
+            
+    document.getElementById('resume')?.innerHTML = html;
     updateResumeTemplate(); // Call this to ensure all editable fields are set up correctly
 }
