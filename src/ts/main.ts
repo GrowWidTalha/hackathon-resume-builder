@@ -617,6 +617,6 @@ function applyTemplate(templateName: string) {
     const resumeData = getResumeData();
     const html=  generateResumeTemplate(resumeData);
             
-    document.getElementById('resume')?.innerHTML = html;
+    document.getElementById('resume')!.innerHTML = html;
     updateResumeTemplate(); // Call this to ensure all editable fields are set up correctly
 }
