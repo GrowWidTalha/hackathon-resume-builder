@@ -14,7 +14,7 @@ interface WorkExperience {
     date: string;
     responsibilities: string[];
 }
-
+console.log("kuch Nazar Aaya to mujhe message karo")
 interface ResumeData {
     name: string;
     profession: string;
