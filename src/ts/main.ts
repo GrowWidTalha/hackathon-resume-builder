@@ -413,6 +413,7 @@ function toggleFormSection(event: Event) {
     }
 }
 // update primary color
+
 document.getElementById('color')?.addEventListener('change', (e) => {
     const color = (e.target as HTMLInputElement).value;
     const roottheme = document.querySelector(':root') as HTMLElement;
@@ -424,9 +425,6 @@ const sdk = new Appwrite.Client();
 sdk.setEndpoint("https://cloud.appwrite.io/v1") // Your Appwrite endpoint
    .setProject("66dd215600334796bc22"); // Your project ID
 const storage = new Appwrite.Storage(sdk);
-
-// Helper function to display the modal
-
 
 // Handle Generate PDF button click
 document.getElementById("generatePDF")!.addEventListener("click", async () => {
@@ -460,35 +458,35 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
 
         const { jsPDF } = window.jspdf;
 
-// Set the PDF to A4 size
-const pdf = new jsPDF({
-  orientation: "portrait",
-  unit: "mm",
-  format: "a4"
-});
+        // Set the PDF to A4 size
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4"
+        });
 
-const imgData = canvas.toDataURL("image/png");
-const imgProps = pdf.getImageProperties(imgData);
+        const imgData = canvas.toDataURL("image/png");
+        const imgProps = pdf.getImageProperties(imgData);
 
-// Calculate scaling to fit the image within A4 dimensions while maintaining aspect ratio
-const pdfWidth = pdf.internal.pageSize.getWidth();
-const pdfHeight = pdf.internal.pageSize.getHeight();
-const widthRatio = pdfWidth / imgProps.width;
-const heightRatio = pdfHeight / imgProps.height;
-const scale = Math.min(widthRatio, heightRatio);
+        // Calculate scaling to fit the image within A4 dimensions while maintaining aspect ratio
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const widthRatio = pdfWidth / imgProps.width;
+        const heightRatio = pdfHeight / imgProps.height;
+        const scale = Math.min(widthRatio, heightRatio);
 
-const scaledWidth = imgProps.width * scale;
-const scaledHeight = imgProps.height * scale;
+        const scaledWidth = imgProps.width * scale;
+        const scaledHeight = imgProps.height * scale;
 
-// Center the image on the page
-const x = (pdfWidth - scaledWidth) / 2;
-const y = (pdfHeight - scaledHeight) / 2;
+        // Center the image on the page
+        const x = (pdfWidth - scaledWidth) / 2;
+        const y = (pdfHeight - scaledHeight) / 2;
 
-// Add the image to the PDF
-pdf.addImage(imgData, "PNG", x, y, scaledWidth, scaledHeight);
+        // Add the image to the PDF
+        pdf.addImage(imgData, "PNG", x, y, scaledWidth, scaledHeight);
 
-// Save the PDF
-pdf.save(fileName);
+        // Save the PDF
+        pdf.save(fileName);
 
         const file = new File([pdf.output("blob")], fileName, { type: "application/pdf" });
         const result = await storage.createFile(
@@ -507,7 +505,6 @@ pdf.save(fileName);
         uploadStatus.style.display = "block";
         shareableLink.value = fileUrl;
         uploadStatus.innerText = "File uploaded successfully!";
-
     } catch (error) {
         console.error("Error:", error);
         loader.style.display = "none";
@@ -552,7 +549,7 @@ document.getElementById("copyLinkButton")!.addEventListener("click", () => {
 
 // Initialize modal and handle visibility
 document.getElementById("showDialogButton")!.addEventListener("click", () => {
-    showPdfDialog()
+    showPdfDialog();
     const fileUrl = localStorage.getItem("resumePDFUrl");
     if (fileUrl) {
         const shareableLink = document.getElementById("shareableLink") as HTMLInputElement;
@@ -560,10 +557,6 @@ document.getElementById("showDialogButton")!.addEventListener("click", () => {
     }
 });
 
-// document.getElementById("openTemplateDialogButton")!.addEventListener("click", showPdfDialog);
-// document.getElementById("closeDialog")!.addEventListener("click", hidePdfDialog);
-
-// Show the dialog
 // Show the dialog
 function showDialog() {
     document.getElementById('templateDialog')?.style.display = 'block';
@@ -576,69 +569,54 @@ function closeDialog() {
 
 // Handle template selection
 function selectTemplate(templateName: string) {
-    // Implement logic to switch templates based on selection
     console.log(`Selected template: ${templateName}`);
-    // Call a function to apply the selected template to the resume
     applyTemplate(templateName);
     closeDialog();
 }
 
-
-// Attach event listeners
+// Attach event listeners for template dialog
 document.getElementById('openTemplateDialogButton')?.addEventListener('click', showDialog);
 document.getElementById('closeDialogButton')?.addEventListener('click', closeDialog);
 const templateButtons = document.querySelectorAll('.template-button');
 
 templateButtons.forEach(button => {
     button.addEventListener('click', () => {
-        const selectedTemplate = button.getAttribute('data-template');
+        const selectedTemplate = button.getAttribute('data-template')!;
         applyTemplate(selectedTemplate);
-        document.getElementById0("templateDialog").style.display = 'none';
+        closeDialog();
     });
 });
 
-
-// Update these functions for the PDF dialog
+// PDF dialog functions
 const showPdfDialog = () => {
-    document.getElementById("dialog").style.display = "block";
+    document.getElementById("dialog")!.style.display = "block";
 };
 
 const hidePdfDialog = () => {
-    document.getElementById("dialog").style.display = "none";
+    document.getElementById("dialog")!.style.display = "none";
 };
 
-// Add these functions for the template dialog
+// Template dialog functions
 const showTemplateDialog = () => {
-    document.getElementById("templateDialog").style.display = "block";
+    document.getElementById("templateDialog")!.style.display = "block";
 };
 
 const hideTemplateDialog = () => {
-    document.getElementById("templateDialog").style.display = "none";
+    document.getElementById("templateDialog")!.style.display = "none";
 };
 
 // Update event listeners
-document.getElementById("showDialogButton").addEventListener("click", showPdfDialog);
-document.getElementById("closeDialog").addEventListener("click", hidePdfDialog);
-document.getElementById("openTemplateDialogButton").addEventListener("click", showTemplateDialog);
-document.getElementById("closeTemplateDialog").addEventListener("click", hideTemplateDialog);
+document.getElementById("showDialogButton")?.addEventListener("click", showPdfDialog);
+document.getElementById("closeDialog")?.addEventListener("click", hidePdfDialog);
+document.getElementById("openTemplateDialogButton")?.addEventListener("click", showTemplateDialog);
+document.getElementById("closeTemplateDialog")?.addEventListener("click", hideTemplateDialog);
 
-// Add template selection S
-// const templateButtons = document.querySelectorAll('.template-button');
-// templateButtons.forEach(button => {
-//     button.addEventListener('click', () => {
-//         const selectedTemplate = button.getAttribute('data-template');
-//         applyTemplate(selectedTemplate);
-//         hideTemplateDialog();
-//     });
-// });
+// Function to get resume data
 function getResumeData(): ResumeData {
-    // Try to retrieve saved resume data from localStorage
     const savedData = localStorage.getItem('resumeData');
     if (savedData) {
-        // Parse and return the saved data if it exists
         return JSON.parse(savedData) as ResumeData;
     } else {
-        // If no saved data, return default resume data
         return {
             name: 'John Doe',
             profession: 'Full Stack Developer',
@@ -670,9 +648,9 @@ function getResumeData(): ResumeData {
     }
 }
 
-
-function applyTemplate(templateName) {
-    const resumeData = getResumeData(); // Implement this function to get current resume data
+// Apply template based on selection
+function applyTemplate(templateName: string) {
+    const resumeData = getResumeData();
     let html;
     switch (templateName) {
         case 'template1':
@@ -690,6 +668,6 @@ function applyTemplate(templateName) {
         default:
             html = generateResumeTemplate(resumeData); // Default to template1
     }
-    document.getElementById('resume').innerHTML = html;
+    document.getElementById('resume')!.innerHTML = html;
     updateResumeTemplate(); // Call this to ensure all editable fields are set up correctly
 }
