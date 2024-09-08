@@ -1,6 +1,6 @@
 
 import { generateResumeTemplate, template2, template3, template4 } from './templates.js';
-
+import jsPDF from 'jspdf';
 // Define interfaces for resume data
 interface Education {
     degree: string;
