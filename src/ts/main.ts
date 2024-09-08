@@ -1,6 +1,6 @@
 
 import { generateResumeTemplate, template2, template3, template4 } from './templates.js';
-import jsPDF from 'jspdf';
+
 // Define interfaces for resume data
 interface Education {
     degree: string;
@@ -451,11 +451,11 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
         }
 
         const canvas = await html2canvas(element);
-        if (typeof window.jsPDF === "undefined") {
-            throw new Error("jsPDF is not loaded");
+        if (typeof window.jspdf === "undefined") {
+            throw new Error("jspdf is not loaded");
         }
 
-        const { jsPDF } = window.jsPDF;
+        const { jsPDF } = window.jspdf;
 
         // Set the PDF to A4 size
         const pdf = new jsPDF({
