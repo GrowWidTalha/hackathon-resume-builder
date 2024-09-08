@@ -338,7 +338,7 @@ function deleteSkill(index: number): void {
 
 // Helper function to create a debounced version of a function
 function debounce(func: Function, wait: number): Function {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     return function(this: any, ...args: any[]) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(this, args), wait);
