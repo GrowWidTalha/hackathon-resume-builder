@@ -68,6 +68,7 @@ function loadResumeData(): void {
             resumeData.picture = resumeData.picture;
         }
     }
+applyTemplate()
 }
 
 // Save resume data to localStorage
