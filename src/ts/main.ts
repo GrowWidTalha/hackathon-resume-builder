@@ -556,14 +556,23 @@ document.getElementById("showDialogButton")!.addEventListener("click", () => {
     }
 });
 
-// Show the dialog
-function showDialog() {
-    document.getElementById('templateDialog')?.style.display = 'block';
+// function showDialog(): void {
+    const dialog = document.getElementById('templateDialog');
+    if (dialog) {
+        dialog.style.display = 'block';
+    } else {
+        console.error('Dialog element not found');
+    }
 }
 
 // Close the dialog
-function closeDialog() {
-    document.getElementById('templateDialog')?.style.display = 'none';
+function closeDialog(): void {
+    const dialog = document.getElementById('templateDialog');
+    if (dialog) {
+        dialog.style.display = 'none';
+    } else {
+        console.error('Dialog element not found');
+    }
 }
 
 // Handle template selection
