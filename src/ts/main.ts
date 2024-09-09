@@ -423,7 +423,7 @@ document.getElementById('color')?.addEventListener('change', (e) => {
 const sdk = new Appwrite.Client();
 sdk.setEndpoint("https://cloud.appwrite.io/v1")
 .setProject("66dd215600334796bc22")
-.setApiKey("standard_a125762d5376b0f7dbc25803fa6227dd4922c1de7518646dcfd30c4c6e3ba72ff23c23499dbf841dbcfbff6316393f049df0a8c7477e2042f566a08c536d1c5fac9aee9a1f9aa6a9d62d0645439fbd9b272cc836f98b7f96eb44aac9d0efa802b2b006bd0b2fe01cec4163b2180bfdaddc6afe6ba29e57a210af398cc27a9f39")
+.setKey("standard_a125762d5376b0f7dbc25803fa6227dd4922c1de7518646dcfd30c4c6e3ba72ff23c23499dbf841dbcfbff6316393f049df0a8c7477e2042f566a08c536d1c5fac9aee9a1f9aa6a9d62d0645439fbd9b272cc836f98b7f96eb44aac9d0efa802b2b006bd0b2fe01cec4163b2180bfdaddc6afe6ba29e57a210af398cc27a9f39")
 // Your Appwrite endpoint
 const storage = new Appwrite.Storage(sdk);
 
