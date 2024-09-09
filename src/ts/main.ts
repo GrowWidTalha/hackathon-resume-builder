@@ -422,7 +422,7 @@ document.getElementById('color')?.addEventListener('change', (e) => {
 
 const sdk = new Appwrite.Client();
 sdk.setEndpoint("https://cloud.appwrite.io/v1")
-.setProject("66dd215600334796bc22") // Your project ID
+.setProject("66dd215600334796bc22")// Your project ID
 // Your Appwrite endpoint
 const storage = new Appwrite.Storage(sdk);
 
@@ -492,12 +492,12 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
 
         const file = new File([pdf.output("blob")], fileName, { type: "application/pdf" });
         const result = await storage.createFile(
-            "66dd217e00339b050ccd", // Replace with your bucket ID
+            "66dec1400021ed45f67e", // Replace with your bucket ID
             Appwrite.ID.unique(),
             file
         );
 
-        const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/66dd217e00339b050ccd/files/${result.$id}/view?project=66dd215600334796bc22`;
+        const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/66dec1400021ed45f67e/files/${result.$id}/view?project=66dec004002cacc7608a`;
         localStorage.setItem("resumePDFUrl", fileUrl);
 
         loader.style.display = "none";
