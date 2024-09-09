@@ -224,24 +224,28 @@ function renderForm(): void {
         workExperienceInputs.innerHTML = '';
         resumeData.workExperience.forEach((job, index) => {
             workExperienceInputs.innerHTML += createExperienceField(index);
-            (document.getElementById(`experienceTitle${index}`) as HTMLInputElement).value = job.title;
-            (document.getElementById(`experienceCompany${index}`) as HTMLInputElement).value = job.company;
-            (document.getElementById(`experienceDate${index}`) as HTMLInputElement).value = job.date;
-            (document.getElementById(`experienceResponsibilities${index}`) as HTMLTextAreaElement).value = job.responsibilities.join(', ');
+        });
 
-            // Add event listeners for real-time updates
-            document.getElementById(`experienceTitle${index}`)?.addEventListener('input', (e) => {
-                updateExperienceField(index, 'title', (e.target as HTMLInputElement).value);
-            });
-            document.getElementById(`experienceCompany${index}`)?.addEventListener('input', (e) => {
-                updateExperienceField(index, 'company', (e.target as HTMLInputElement).value);
-            });
-            document.getElementById(`experienceDate${index}`)?.addEventListener('input', (e) => {
-                updateExperienceField(index, 'date', (e.target as HTMLInputElement).value);
-            });
-            document.getElementById(`experienceResponsibilities${index}`)?.addEventListener('input', (e) => {
-                updateExperienceField(index, 'responsibilities', (e.target as HTMLTextAreaElement).value.split(',').map(r => r.trim()));
-            });
+        // Set values and add event listeners after rendering all fields
+        resumeData.workExperience.forEach((job, index) => {
+            const titleInput = document.getElementById(`experienceTitle${index}`) as HTMLInputElement;
+            const companyInput = document.getElementById(`experienceCompany${index}`) as HTMLInputElement;
+            const dateInput = document.getElementById(`experienceDate${index}`) as HTMLInputElement;
+            const responsibilitiesInput = document.getElementById(`experienceResponsibilities${index}`) as HTMLTextAreaElement;
+
+            if (titleInput && companyInput && dateInput && responsibilitiesInput) {
+                titleInput.value = job.title;
+                companyInput.value = job.company;
+                dateInput.value = job.date;
+                responsibilitiesInput.value = job.responsibilities.join(', ');
+
+                titleInput.addEventListener('input', (e) => updateExperienceField(index, 'title', (e.target as HTMLInputElement).value));
+                companyInput.addEventListener('input', (e) => updateExperienceField(index, 'company', (e.target as HTMLInputElement).value));
+                dateInput.addEventListener('input', (e) => updateExperienceField(index, 'date', (e.target as HTMLInputElement).value));
+                responsibilitiesInput.addEventListener('input', (e) => {
+                    updateExperienceField(index, 'responsibilities', (e.target as HTMLTextAreaElement).value.split(',').map(r => r.trim()));
+                });
+            }
         });
     }
 
@@ -251,9 +255,15 @@ function renderForm(): void {
         skillsInputs.innerHTML = '';
         resumeData.skills.forEach((skill, index) => {
             skillsInputs.innerHTML += createSkillField(index, skill);
-            document.getElementById(`skill${index}`)?.addEventListener('input', (e) => {
-                updateSkillField(index, (e.target as HTMLInputElement).value);
-            });
+        });
+
+        // Add event listeners after rendering all fields
+        resumeData.skills.forEach((skill, index) => {
+            const skillInput = document.getElementById(`skill${index}`) as HTMLInputElement;
+            if (skillInput) {
+                skillInput.value = skill;
+                skillInput.addEventListener('input', (e) => updateSkillField(index, (e.target as HTMLInputElement).value));
+            }
         });
     }
 }
