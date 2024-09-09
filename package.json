@@ -1,14 +1,21 @@
 {
   "name": "resume-builder",
   "version": "1.0.0",
-"type": "module",
+  "type": "module",
   "scripts": {
-    "build": "rimraf dist && npx mkdirp dist/js dist/css && tsc && npx copyfiles src/css/style.css dist/css && npx copyfiles index.html dist && npx copyfiles -u 1 public/**/* dist/public"
+    "start": "webpack serve --open",
+    "build": "webpack --mode production"
   },
   "devDependencies": {
-"rimraf": "^5.0.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.1",
+    "ts-loader": "^9.5.1",
     "typescript": "^4.0.0",
-    "mkdirp": "^1.0.4",
-    "copyfiles": "^2.4.1"
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
   }
 }

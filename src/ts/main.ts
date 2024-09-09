@@ -1,5 +1,5 @@
 
-import { generateResumeTemplate,  } from './templates.js';
+import { generateResumeTemplate } from './templates';
 alert("JavaScript is working")
 // Define interfaces for resume data
 interface Education {
@@ -205,7 +205,7 @@ function renderForm(): void {
         const element = document.getElementById(key);
         if (element && key !== 'workExperience' && key !== 'education' && key !== 'skills') {
             (element as HTMLInputElement).value = resumeData[key as keyof ResumeData] as string || '';
-        } 
+        }
     });
 
     // Render education
@@ -421,10 +421,11 @@ document.getElementById('color')?.addEventListener('change', (e) => {
     roottheme.style.setProperty('--primary-color', color);
 });
 
-// Initialize Appwrite client
+
 const sdk = new Appwrite.Client();
-sdk.setEndpoint("https://cloud.appwrite.io/v1") // Your Appwrite endpoint
-   .setProject("66dd215600334796bc22"); // Your project ID
+sdk.setEndpoint("https://cloud.appwrite.io/v1")
+.setProject("66dd215600334796bc22") // Your project ID
+// Your Appwrite endpoint
 const storage = new Appwrite.Storage(sdk);
 
 // Handle Generate PDF button click
@@ -560,7 +561,7 @@ document.getElementById("showDialogButton")!.addEventListener("click", () => {
     }
 });
 
- 
+
 // PDF dialog functions
 const showPdfDialog = () => {
     document.getElementById("dialog")!.style.display = "block";
@@ -615,4 +616,3 @@ function getResumeData(): ResumeData {
 }
 
 // Apply template based on selection
-
