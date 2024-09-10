@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Resume Viewer</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f0f0f0;
+            }
+            .page-container {
+                width: 100%;
+                max-width: 1000px;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+            #resume-container {
+                background-color: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 40px;
+                border-radius: 8px;
+            }
+            @media (max-width: 768px) {
+                .page-container {
+                    padding: 10px;
+                }
+                #resume-container {
+                    padding: 20px;
+                }
+            }
+        </style>
+        <!-- Link your CSS here -->
+    </head>
+    <body>
+        <div class="page-container">
+            <div id="resume-container">
+                <!-- Resume content will be injected here -->
+            </div>
+        </div>
+
+        <!-- Link your generateResumeTemplate.js file -->
+
+        <script>
+            // Function to parse and load the resume data from the URL
+            function generateResumeTemplate(data) {
+                return `
+        <header>
+            <div class="header-content">
+                <img id="resumePicture" src="${
+                    data.picture || "/default-profile.jpg"
+                }" alt="Profile Picture">
+                <div class="header-text">
+                    <h1 id="resumeName" data-field="name">${data.name}</h1>
+                    <p id="resumeProfession" data-field="profession">${
+                        data.profession
+                    }</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="contact">
+                <ul>
+                    <li><i class="fas fa-envelope"></i> <span id="resumeEmail" data-field="email">${
+                        data.email
+                    }</span></li>
+                    <li><i class="fas fa-phone"></i> <span id="resumePhone" data-field="phone">${
+                        data.phone
+                    }</span></li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span id="resumeLocation" data-field="location">${
+                        data.location
+                    }</span></li>
+                    <li><i class="fas fa-globe"></i> <a id="resumeWebsite" data-field="website" href="${
+                        data.website
+                    }">${data.website}</a></li>
+                </ul>
+            </section>
+
+            <section class="summary">
+                <h2>Professional Summary</h2>
+                <p id="resumeSummary" data-field="summary">${data.summary}</p>
+            </section>
+
+            <section class="experience">
+                <h2>Work Experience</h2>
+                ${data.workExperience
+                    .map((job, index) => generateJobHTML(job, index))
+                    .join("")}
+            </section>
+
+            <section class="education">
+                <h2>Education</h2>
+                <div class="degree">
+                    <h3 data-field="education.degree">${
+                        data.education.degree
+                    }</h3>
+                    <p class="school" data-field="education.school">${
+                        data.education.school
+                    }</p>
+                    <p class="date" data-field="education.date">${
+                        data.education.date
+                    }</p>
+                </div>
+            </section>
+
+            <section class="skills">
+                <h2>Skills</h2>
+                <ul>
+                    ${data.skills
+                        .map(
+                            (skill, index) => `
+                        <li data-field="skills[${index}]">${skill}</li>
+                    `
+                        )
+                        .join("")}
+                </ul>
+            </section>
+        </main>
+    `;
+            }
+
+            function generateJobHTML(job, index) {
+                return `
+        <div class="job" id="job-${index}">
+            <div class="job-header">
+                <h3 data-field="workExperience[${index}].title">${
+                    job.title
+                }</h3>
+                <p class="company" data-field="workExperience[${index}].company">${
+                    job.company
+                }</p>
+            </div>
+            <p class="date" data-field="workExperience[${index}].date">${
+                    job.date
+                }</p>
+            <ul>
+                ${job.responsibilities
+                    .map(
+                        (responsibility, rIndex) => `
+                    <li data-field="workExperience[${index}].responsibilities[${rIndex}]">${responsibility}</li>
+                `
+                    )
+                    .join("")}
+            </ul>
+        </div>
+    `;
+            }
+
+            function loadResumeFromURL() {
+                const queryParams = new URLSearchParams(window.location.search);
+                const encodedData = queryParams.get("data");
+
+                if (encodedData) {
+                    try {
+                        // Decode the base64 data
+                        const jsonData = atob(encodedData);
+
+                        // Parse the JSON data into the ResumeData object
+                        const resumeData = JSON.parse(jsonData);
+
+                        // Generate the resume template using the provided function
+                        const resumeHTML = generateResumeTemplate(resumeData);
+
+                        // Insert the generated HTML into the resume container
+                        const resumeContainer =
+                            document.getElementById("resume-container");
+                        if (resumeContainer) {
+                            resumeContainer.innerHTML = resumeHTML;
+                        }
+                    } catch (error) {}
+                } else {
+                    console.error("No resume data found in URL.");
+                    // Display a message if no data is foundinnerHTML
+                    document.getElementById("resume-container").innerHTML =
+                        "<p>No resume data provided. Please check the link.</p>";
+                }
+            }
+
+            // Call the function when the page loads
+            window.onload = loadResumeFromURL;
+        </script>
+    </body>
+</html>

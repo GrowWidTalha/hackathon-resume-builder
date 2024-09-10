@@ -429,14 +429,6 @@ document.getElementById('color')?.addEventListener('change', (e) => {
     roottheme.style.setProperty('--primary-color', color);
 });
 
-
-const sdk = new Appwrite.Client();
-sdk.setEndpoint("https://cloud.appwrite.io/v1")
-.setProject("66dd215600334796bc22")
-// Your Appwrite endpoint
-const storage = new Appwrite.Storage(sdk);
-
-// Handle Generate PDF button click
 document.getElementById("generatePDF")!.addEventListener("click", async () => {
     const loader = document.getElementById("loader")!;
     const fileInput = document.getElementById("fileInput") as HTMLInputElement;
@@ -501,30 +493,23 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
         pdf.save(fileName);
 
         const file = new File([pdf.output("blob")], fileName, { type: "application/pdf" });
-        const result = await storage.createFile(
-            "66dec1400021ed45f67e", // Replace with your bucket ID
-            Appwrite.ID.unique(),
-            file
-        );
 
-        const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/66dec1400021ed45f67e/files/${result.$id}/view?project=66dec004002cacc7608a`;
-        localStorage.setItem("resumePDFUrl", fileUrl);
-
-        loader.style.display = "none";
-        uploadButton.style.display = "block";
-        shareableLink.style.display = "block";
-        copyLinkButton.style.display = "block";
-        uploadStatus.style.display = "block";
-        shareableLink.value = fileUrl;
-        uploadStatus.innerText = "File uploaded successfully!";
-    } catch (error) {
-        console.error("Error:", error);
-        loader.style.display = "none";
-        uploadStatus.style.display = "block";
-        uploadStatus.innerText = "An error occurred. Please try again.";
-    }
+    const fileUrl = generateResumeLink(resumeData)
+    localStorage.setItem("resumePDFUrl", fileUrl);
+    loader.style.display = "none";
+    uploadButton.style.display = "block";
+    shareableLink.style.display = "block";
+    copyLinkButton.style.display = "block";
+    uploadStatus.style.display = "block";
+    shareableLink.value = fileUrl;
+    uploadStatus.innerText = "File uploaded successfully!";
+} catch (error) {
+    console.error("Error:", error);
+    loader.style.display = "none";
+    uploadStatus.style.display = "block";
+    uploadStatus.innerText = "An error occurred. Please try again.";
+}
 });
-
 // Handle Upload PDF button click
 document.getElementById("uploadButton")!.addEventListener("click", async () => {
     const fileInput = document.getElementById("fileInput") as HTMLInputElement;
@@ -533,21 +518,10 @@ document.getElementById("uploadButton")!.addEventListener("click", async () => {
     const shareableLink = document.getElementById("shareableLink") as HTMLInputElement;
 
     if (file) {
-        try {
-            const result = await storage.createFile(
-                "66dd217e00339b050ccd", // Replace with your bucket ID
-                Appwrite.ID.unique(),
-                file
-            );
-            const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/66dd217e00339b050ccd/files/${result.$id}/view?project=66dd215600334796bc22`;
-            localStorage.setItem("resumePDFUrl", fileUrl);
-
-            shareableLink.value = fileUrl;
-            uploadStatus.innerText = "File uploaded successfully!";
-        } catch (error) {
-            console.error("Error uploading file:", error);
-            uploadStatus.innerText = "Error uploading file.";
-        }
+        const fileUrl = generateResumeLink(resumeData);
+        localStorage.setItem("resumePDFUrl", fileUrl);
+        shareableLink.value = fileUrl;
+        uploadStatus.innerText = "File uploaded successfully!";
     }
 });
 
@@ -562,7 +536,7 @@ document.getElementById("copyLinkButton")!.addEventListener("click", () => {
 // Initialize modal and handle visibility
 document.getElementById("showDialogButton")!.addEventListener("click", () => {
     showPdfDialog();
-    const fileUrl = localStorage.getItem("resumePDFUrl");
+    const fileUrl = generateResumeLink(resumeData)
     if (fileUrl) {
         const shareableLink = document.getElementById("shareableLink") as HTMLInputElement;
         shareableLink.value = fileUrl;
@@ -620,7 +594,21 @@ function getResumeData(): ResumeData {
             skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'SQL'],
             picture: ''
         };
-    }
-}
+    }}
 
-// Apply template based on selection
+function generateResumeLink(resumeData: ResumeData) {
+    const data = { ...resumeData };
+
+    // Remove the picture data if necessary or ensure it's not base64 encoded
+    data.picture = "";
+
+    // Convert the object to a JSON string
+    const jsonData = JSON.stringify(data);
+    const encodedData = btoa(jsonData);
+
+
+    // Create the resume link
+    const resumeLink = `${window.location.origin}/resume.html?data=${encodedData}`;
+
+    return resumeLink;
+}

@@ -37,7 +37,13 @@ export default {
     plugins: [
         new CleanWebpackPlugin(), // Cleans the output directory before each build
         new HtmlWebpackPlugin({
-            template: "./index.html", // Your HTML file
+            template: "./index.html", // Main HTML file
+            chunks: ["main", "styles"], // Include the relevant chunks
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/resume.html", // HTML file for resume
+            filename: "resume.html",
+            chunks: ["template", "styles"], // Include the relevant chunks
         }),
         new MiniCssExtractPlugin({
             filename: "styles.css",

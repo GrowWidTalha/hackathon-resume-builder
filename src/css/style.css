@@ -217,10 +217,6 @@ body {
     font-size: 16px;
     cursor: pointer;
 }
-
-.template-button:hover {
-    background-color: #45a049;
-}
 #closeDialogButton {
     margin-top: 20px;
     padding: 10px;
@@ -1235,15 +1231,6 @@ input[type="text"] {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-    }
-
-    .skill-template-2 {
-        background-color: #e0f0ff;
-        color: #3a7bd5;
-        padding: 5px 10px;
-        border-radius: 15px;
-        font-size: 0.9em;
-        display: inline-block;
     }
 
     .job-template-2 {
