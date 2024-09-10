@@ -502,7 +502,7 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
     copyLinkButton.style.display = "block";
     uploadStatus.style.display = "block";
     shareableLink.value = fileUrl;
-    uploadStatus.innerText = "File uploaded successfully!";
+    uploadStatus.innerText = "Resume generated successfully!";
 } catch (error) {
     console.error("Error:", error);
     loader.style.display = "none";
