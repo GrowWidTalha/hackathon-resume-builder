@@ -612,3 +612,15 @@ function generateResumeLink(resumeData: ResumeData) {
 
     return resumeLink;
 }
+
+// Toggle the visibility of the form
+function toggleForm(): void {
+    const form = document.getElementById('form') as HTMLElement;
+    if (form) {
+        // Toggle the 'hidden' class
+        form.classList.toggle('hidden');
+    }
+}
+
+// Add event listener to the button
+document.getElementById('toggleForm')?.addEventListener('click', toggleForm);
