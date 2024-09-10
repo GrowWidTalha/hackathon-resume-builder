@@ -218,10 +218,10 @@
         </div>
         <div id="modal" class="modal">
             <div class="modal-content">
-                <header class="modal-header">
+                <div class="modal-header">
                     <h2>Generate and Upload PDF</h2>
                     <span id="closeDialog" class="close">&times;</span>
-                </header>
+                </div>
                 <div id="modalBody" class="modal-body">
                     <button id="generatePDF" class="button">
                         Generate and Upload PDF
@@ -252,6 +252,68 @@
                         <div id="uploadStatus" style="display: none"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="featureDialog" class="fd-dialog">
+            <div class="fd-dialog-content">
+                <div class="fd-dialog-header">
+                    <h2>Project Features</h2>
+                </div>
+                <div class="fd-dialog-body">
+                    <ul>
+                        <li>
+                            Edit On Place: Edit your resume on place by hovering
+                            on PDF preview
+                        </li>
+                        <li>
+                            Resume Form: comprehensive form to fill in your
+                            details
+                        </li>
+                        <li>
+                            Resume Preview: real-time preview of your resume
+                        </li>
+                        <li>PDF Generation: convert your resume to PDF</li>
+                        <li>
+                            Download Resume: download your resume in PDF format
+                        </li>
+                        <li>
+                            Share Resume: share your resume with a unique link
+                        </li>
+                        <li>Copy Link: copy the link to your clipboard</li>
+                        <li>
+                            Local Storage: save your resume to browser&apos;s
+                            local storage
+                        </li>
+                        <li>Responsive Design: optimized for all devices</li>
+                    </ul>
+                </div>
+                <div class="fd-dialog-credits">
+                    <h3>Credits & Personal Details</h3>
+                    <p><strong>Name:</strong> Talha Ali</p>
+                    <p><strong>Roll Number:</strong> 00414047</p>
+                    <p><strong>Slot:</strong> Monday 2:00 to 5:00 PM</p>
+                    <p>
+                        <strong>LinkedIn Profile:</strong>
+                        <a
+                            href="https://linkedin.com/in/growwithtalha-webdeveloper"
+                            target="_blank"
+                            >growwithtalha-webdeveloper</a
+                        >
+                    </p>
+                    <p>
+                        <strong>Github Repo:</strong>
+                        <a
+                            href="https://github.com/growwidtalha/hackathon-resume-builder"
+                            target="_blank"
+                            >Github Repo</a
+                        >
+                    </p>
+                </div>
+                <footer class="fd-dialog-footer">
+                    <button id="closeDialogButton" class="fd-button">
+                        Close
+                    </button>
+                </footer>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.0"></script>

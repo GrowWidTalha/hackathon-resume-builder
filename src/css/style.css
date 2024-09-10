@@ -711,8 +711,9 @@ button {
 
 .modal-content {
     background-color: #fefefe;
-    /* margin: 5% auto; */
-    /* padding: 20px; */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     border: 1px solid #888;
     width: 80%; /* Adjust as needed */
     max-width: 600px; /* Optional max width */
@@ -720,6 +721,32 @@ button {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
 }
 
+.fd-dialog-body li {
+    margin-bottom: 10px;
+}
+
+.fd-dialog-credits {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.fd-dialog-credits h3 {
+    margin-top: 0;
+}
+
+.fd-dialog-credits p {
+    margin: 5px 0;
+}
+
+.fd-dialog-credits a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.fd-dialog-credits a:hover {
+    text-decoration: underline;
+}
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -728,7 +755,6 @@ button {
 
 .modal-header h2 {
     margin: 0;
-    color: white;
 }
 
 .close {
@@ -958,4 +984,82 @@ input[type="text"] {
 [contenteditable="true"]:focus {
     border-color: #3a7bd5;
     outline: none;
+}
+
+/* Unique styles for the dialog */
+.fd-dialog {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}
+
+.fd-dialog-content {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #fff;
+    margin: 10% auto; /* Center the dialog */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Adjust width as needed */
+    max-width: 600px; /* Optional max width */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+.fd-dialog-header,
+.fd-dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fd-dialog-header h2 {
+    margin: 0;
+}
+
+.fd-close-button {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+.fd-close-button:hover {
+    color: #f00;
+}
+
+.fd-dialog-body ul {
+    list-style-type: disc;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.fd-dialog-body li {
+    margin-bottom: 10px;
+}
+
+.fd-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.fd-button:hover {
+    background-color: #0056b3;
 }

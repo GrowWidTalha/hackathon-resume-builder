@@ -624,3 +624,28 @@ function toggleForm(): void {
 
 // Add event listener to the button
 document.getElementById('toggleForm')?.addEventListener('click', toggleForm);
+
+// Show the dialog on page load
+window.onload = () => {
+    const dialog = document.getElementById('featureDialog');
+    if (dialog) {
+        dialog.style.display = 'block';
+    }
+
+    // Close dialog functionality
+    const closeDialog = document.getElementById('closeDialog');
+    const closeDialogButton = document.getElementById('closeDialogButton');
+
+    const close = () => {
+        if (dialog) {
+            dialog.style.display = 'none';
+        }
+    };
+
+    if (closeDialog) {
+        closeDialog.addEventListener('click', close);
+    }
+    if (closeDialogButton) {
+        closeDialogButton.addEventListener('click', close);
+    }
+};
