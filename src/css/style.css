@@ -147,6 +147,7 @@ body {
     display: none;
 }
 
+/* Navbar styles */
 .navbar {
     background-color: var(--secondary-color);
     color: var(--light-text-color);
@@ -155,11 +156,59 @@ body {
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.3s ease;
+    flex-wrap: wrap; /* Allows content to wrap on smaller screens */
 }
 
 .navbar-brand {
     font-size: 1.2rem;
     font-weight: bold;
+    flex: 1 1 auto;
+}
+
+/* Navbar buttons */
+.toggle-button {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 0.9rem; /* Adjust font size for smaller screens */
+    margin: 0 0.5rem;
+}
+
+.toggle-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: stretch; /* Ensures buttons take full width */
+        text-align: center;
+    }
+
+    .navbar-brand {
+        margin-bottom: 1rem;
+    }
+
+    .toggle-button {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand {
+        font-size: 1rem; /* Smaller font size for very small screens */
+    }
+
+    .toggle-button {
+        font-size: 0.8rem; /* Smaller font size for very small screens */
+    }
 }
 
 .toggle-button {
