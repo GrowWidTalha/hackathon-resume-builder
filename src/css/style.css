@@ -706,30 +706,74 @@ button {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
+    /* margin: 5% auto; */
+    /* padding: 20px; */
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%; /* Adjust as needed */
+    max-width: 600px; /* Optional max width */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: white;
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
+    font-size: 24px;
+    color: white;
     font-weight: bold;
+    cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
     text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
     cursor: pointer;
+    margin: 5px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+.link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+input[type="file"],
+input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="text"] {
+    display: block;
 }
 
 /* Styles for buttons */
@@ -767,20 +811,6 @@ input[type="text"] {
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
     max-width: 600px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 .input-group {

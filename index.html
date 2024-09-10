@@ -216,28 +216,41 @@
                 </div>
             </div>
         </div>
-        <div id="dialog" class="modal">
+        <div id="modal" class="modal">
             <div class="modal-content">
-                <span id="closeDialog" class="close">&times;</span>
-                <div id="modalContent">
+                <header class="modal-header">
+                    <h2>Generate and Upload PDF</h2>
+                    <span id="closeDialog" class="close">&times;</span>
+                </header>
+                <div id="modalBody" class="modal-body">
                     <button id="generatePDF" class="button">
                         Generate and Upload PDF
                     </button>
                     <div id="loader" class="loader" style="display: none"></div>
                     <input type="file" id="fileInput" style="display: none" />
-                    <button id="uploadButton" style="display: none">
+                    <button
+                        id="uploadButton"
+                        class="button"
+                        style="display: none"
+                    >
                         Generate Link
                     </button>
-                    <input
-                        type="text"
-                        id="shareableLink"
-                        readonly
-                        style="display: none"
-                    />
-                    <button id="copyLinkButton" style="display: none">
-                        Copy Link
-                    </button>
-                    <div id="uploadStatus" style="display: none"></div>
+                    <div class="link-container">
+                        <input
+                            type="text"
+                            id="shareableLink"
+                            readonly
+                            style="display: none"
+                        />
+                        <button
+                            id="copyLinkButton"
+                            class="button"
+                            style="display: none"
+                        >
+                            Copy Link
+                        </button>
+                        <div id="uploadStatus" style="display: none"></div>
+                    </div>
                 </div>
             </div>
         </div>

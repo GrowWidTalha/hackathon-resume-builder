@@ -497,7 +497,7 @@ document.getElementById("generatePDF")!.addEventListener("click", async () => {
     const fileUrl = generateResumeLink(resumeData)
     localStorage.setItem("resumePDFUrl", fileUrl);
     loader.style.display = "none";
-    uploadButton.style.display = "block";
+    uploadButton.style.display = "none";
     shareableLink.style.display = "block";
     copyLinkButton.style.display = "block";
     uploadStatus.style.display = "block";
@@ -546,19 +546,19 @@ document.getElementById("showDialogButton")!.addEventListener("click", () => {
 
 // PDF dialog functions
 const showPdfDialog = () => {
-    document.getElementById("dialog")!.style.display = "block";
+    document.getElementById("modal")!.style.display = "block";
 };
 
 const hidePdfDialog = () => {
-    document.getElementById("dialog")!.style.display = "none";
+    document.getElementById("modal")!.style.display = "none";
 };
 
 // Template dialog functions
 
 
 // Update event listeners
-document.getElementById("showDialogButton")?.addEventListener("click", showPdfDialog);
-document.getElementById("closeDialog")?.addEventListener("click", hidePdfDialog);
+(document.getElementById("showDialogButton") as HTMLButtonElement)?.addEventListener("click", showPdfDialog);
+(document.getElementById("closeDialog") as HTMLButtonElement)?.addEventListener("click", hidePdfDialog);
 
 // Function to get resume data
 function getResumeData(): ResumeData {
