@@ -82,7 +82,7 @@ export function generateResumeTemplate(data: ResumeData): string {
 
 function generateJobHTML(job: Job, index: number): string {
     return `
-        <div class="job" id="job-${index}">
+        div class="job" id="job-${index}">
             <div class="job-header">
                 <h3 data-field="workExperience[${index}].title">${job.title}</h3>
                 <p class="company" data-field="workExperience[${index}].company">${job.company}</p>
@@ -93,6 +93,6 @@ function generateJobHTML(job: Job, index: number): string {
                     <li data-field="workExperience[${index}].responsibilities[${rIndex}]">${responsibility}</li>
                 `).join('')}
             </ul>
-        </div>
+        </div><
     `;
 }
