@@ -1,325 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Resume Builder</title>
-        <link rel="stylesheet" href="styles.css" />
-
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        />
-    </head>
-    <body>
-        <nav class="navbar">
-            <div class="navbar-brand">Resume Builder</div>
-            <div>
-                <button id="toggleForm" class="toggle-button">
-                    Toggle Edit Form
-                </button>
-                <button id="showDialogButton" class="toggle-button">
-                    Generate
-                </button>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Resume Builder - Create Professional Resumes Online</title>
+    <link rel="stylesheet" href="./landingStyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">HTML Resume Builder</div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+            </ul>
         </nav>
+    </header>
 
-        <div class="main-container">
-            <div class="flex-container">
-                <div id="form" class="container edit-form form-container">
-                    <h2>Edit Resume</h2>
-                    <form id="resumeForm">
-                        <div class="color-input-group">
-                            <label for="color">Color:</label>
-                            <input
-                                type="color"
-                                class="color-input"
-                                name="color"
-                                id="color"
-                            />
-                        </div>
-                        <div class="form-section">
-                            <h3 class="section-toggle">
-                                Basic Information
-                                <i class="fas fa-chevron-down"></i>
-                            </h3>
-                            <div class="section-content">
-                                <div class="input-group">
-                                    <label for="profilePicture"
-                                        >Profile Picture:</label
-                                    >
-                                    <input
-                                        type="file"
-                                        id="profilePicture"
-                                        name="profilePicture"
-                                        accept="image/*"
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="name">Name:</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        required
-                                        minlength="2"
-                                        maxlength="50"
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="profession">Profession:</label>
-                                    <input
-                                        type="text"
-                                        id="profession"
-                                        name="profession"
-                                        required
-                                        minlength="2"
-                                        maxlength="50"
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="email">Email:</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        required
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="phone">Phone:</label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        pattern="[0-9]{11}"
-                                        title="Phone number must be 10 digits"
-                                        required
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="location">Location:</label>
-                                    <input
-                                        type="text"
-                                        id="location"
-                                        name="location"
-                                        required
-                                        minlength="2"
-                                        maxlength="100"
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="website">Website:</label>
-                                    <input
-                                        type="url"
-                                        id="website"
-                                        name="website"
-                                        required
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="summary"
-                                        >Professional Summary:</label
-                                    >
-                                    <textarea
-                                        id="summary"
-                                        name="summary"
-                                        required
-                                        minlength="10"
-                                        maxlength="1000"
-                                    ></textarea>
-                                </div>
-                            </div>
-                        </div>
+    <main>
+        <section id="hero">
+            <div class="hero-content">
+                <h1>Create Professional Resumes Online in Minutes</h1>
+                <p>Stand out from the crowd with our easy-to-use HTML-based resume builder. Craft your perfect resume and access it from anywhere.</p>
+                <a href="/generate.html" class="cta-button">Build Your Resume Now</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://img.freepik.com/premium-vector/professional-man-holding-cv-young-guy-with-dossier-resume_1332476-3768.jpg?w=1380" alt="Resume Builder Preview">
+            </div>
+        </section>
 
-                        <div class="form-section">
-                            <h3 class="section-toggle">
-                                Education <i class="fas fa-chevron-down"></i>
-                            </h3>
-                            <div class="section-content">
-                                <div class="input-group">
-                                    <label for="educationDegree">Degree:</label>
-                                    <input
-                                        type="text"
-                                        id="educationDegree"
-                                        name="educationDegree"
-                                        required
-                                        minlength="2"
-                                        maxlength="100"
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="educationSchool">School:</label>
-                                    <input
-                                        type="text"
-                                        id="educationSchool"
-                                        name="educationSchool"
-                                        required
-                                        minlength="2"
-                                        maxlength="100"
-                                    />
-                                </div>
-                                <div class="input-group">
-                                    <label for="educationDate">Date:</label>
-                                    <input
-                                        type="date"
-                                        id="educationDate"
-                                        name="educationDate"
-                                        required
-                                        pattern="\d{4}-\d{2}-\d{2}"
-                                        title="Date must be in YYYY-MM-DD format"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h3 class="section-toggle">
-                                Work Experience
-                                <i class="fas fa-chevron-down"></i>
-                            </h3>
-                            <div class="section-content">
-                                <div id="workExperienceInputs"></div>
-                                <button
-                                    type="button"
-                                    onclick="addExperience()"
-                                    class="add-button"
-                                >
-                                    Add Experience
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="form-section">
-                            <h3 class="section-toggle">
-                                Skills <i class="fas fa-chevron-down"></i>
-                            </h3>
-                            <div class="section-content">
-                                <div id="skillsInputs"></div>
-                                <button
-                                    type="button"
-                                    onclick="addSkill()"
-                                    class="add-button"
-                                >
-                                    Add Skill
-                                </button>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-button">
-                            Update Resume
-                        </button>
-                    </form>
+        <section id="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Professional HTML Template</h3>
+                    <p>Use our modern and ATS-friendly HTML resume template.</p>
                 </div>
-                <div class="resume-wrapper">
-                    <div id="resume" class="container"></div>
+                <div class="feature-item">
+                    <i class="fas fa-pencil-alt"></i>
+                    <h3>Easy Information Input</h3>
+                    <p>Fill in your details using our structured, user-friendly form.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-eye"></i>
+                    <h3>Real-time Preview</h3>
+                    <p>See your resume update in real-time as you input your information.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Responsive Design</h3>
+                    <p>Your resume looks great on all devices - desktop, tablet, and mobile.</p>
                 </div>
             </div>
-        </div>
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Generate and Download PDF</h2>
-                    <span id="closeDialog" class="close">&times;</span>
-                </div>
-                <div id="modalBody" class="modal-body">
-                    <button id="generatePDF" class="button">
-                        Generate and Upload PDF
-                    </button>
-                    <div id="loader" class="loader" style="display: none"></div>
-                    <input type="file" id="fileInput" style="display: none" />
-                    <button
-                        id="uploadButton"
-                        class="button"
-                        style="display: none"
-                    >
-                        Generate Link
-                    </button>
-                    <div class="link-container">
-                        <input
-                            type="text"
-                            id="shareableLink"
-                            readonly
-                            style="display: none"
-                        />
-                        <button
-                            id="copyLinkButton"
-                            class="button"
-                            style="display: none"
-                        >
-                            Copy Link
-                        </button>
-                        <div id="uploadStatus" style="display: none"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="featureDialog" class="fd-dialog">
-            <div class="fd-dialog-content">
-                <div class="fd-dialog-header">
-                    <h2>Project Features</h2>
-                </div>
-                <div class="fd-dialog-body">
-                    <ul>
-                        <li>
-                            Edit On Place: Edit your resume on place by hovering
-                            on PDF preview
-                        </li>
-                        <li>
-                            Resume Form: comprehensive form to fill in your
-                            details
-                        </li>
-                        <li>
-                            Resume Preview: real-time preview of your resume
-                        </li>
-                        <li>PDF Generation: convert your resume to PDF</li>
-                        <li>
-                            Download Resume: download your resume in PDF format
-                        </li>
-                        <li>
-                            Share Resume: share your resume with a unique link
-                        </li>
-                        <li>Copy Link: copy the link to your clipboard</li>
-                        <li>
-                            Local Storage: save your resume to browser&apos;s
-                            local storage
-                        </li>
-                        <li>Responsive Design: optimized for all devices</li>
-                    </ul>
-                </div>
-                <div class="fd-dialog-credits">
-                    <h3>Credits & Personal Details</h3>
-                    <p><strong>Name:</strong> Talha Ali</p>
-                    <p><strong>Roll Number:</strong> 00414047</p>
-                    <p><strong>Slot:</strong> Monday 2:00 to 5:00 PM</p>
-                    <p>
-                        <strong>LinkedIn Profile:</strong>
-                        <a
-                            href="https://linkedin.com/in/growwithtalha-webdeveloper"
-                            target="_blank"
-                            >growwithtalha-webdeveloper</a
-                        >
-                    </p>
-                    <p>
-                        <strong>Github Repo:</strong>
-                        <a
-                            href="https://github.com/growwidtalha/hackathon-resume-builder"
-                            target="_blank"
-                            >Github Repo</a
-                        >
-                    </p>
-                </div>
-                <footer class="fd-dialog-footer">
-                    <button id="closeDialogButton" class="fd-button">
-                        Close
-                    </button>
-                </footer>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/appwrite@16.0.0"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        </section>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-        <script src="./js/main.js" type="module"></script>
-    </body>
+        <section id="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Enter Your Information</h3>
+                    <p>Fill in your details using our structured, easy-to-use form.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Add Multiple Entries</h3>
+                    <p>Include multiple work experiences, education details, and skills.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Preview and Refine</h3>
+                    <p>See your resume update in real-time and make adjustments as needed.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="data-privacy">
+            <h2>Data Privacy and Security</h2>
+            <p><i class="fas fa-lock"></i> Your resume data is stored locally in your browser. We don't save or transmit your personal information.</p>
+        </section>
+
+        <section id="testimonials">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <p><i class="fas fa-quote-left"></i> "This HTML resume builder is so convenient! I can update my resume from any device."</p>
+                    <cite>- John Doe, Software Engineer</cite>
+                </div>
+                <div class="testimonial">
+                    <p><i class="fas fa-quote-left"></i> "I love how I can see my resume update in real-time. It makes the process so much easier!"</p>
+                    <cite>- Jane Smith, Marketing Specialist</cite>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 HTML Resume Builder. All rights reserved.</p>
+    </footer>
+
+    <!-- <script src="script.js"></script> -->
+</body>
 </html>

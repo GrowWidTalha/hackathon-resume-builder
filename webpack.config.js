@@ -13,10 +13,11 @@ export default {
         main: "./src/ts/main.ts",
         template: "./src/ts/templates.ts",
         styles: "./src/css/style.css",
+        landingStyles: "./src/css/landingpage.css",
     },
     output: {
         filename: "[name].bundle.js",
-        path: path.resolve(__dirname, "dist"), // Output directory
+        path: path.resolve(__dirname, "dist"),
     },
     resolve: {
         extensions: [".ts", ".js", ".css"],
@@ -35,18 +36,23 @@ export default {
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(), // Cleans the output directory before each build
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: "./index.html", // Main HTML file
-            chunks: ["main", "styles"], // Include the relevant chunks
+            template: "./index.html",
+            chunks: ["main", "styles"],
         }),
         new HtmlWebpackPlugin({
-            template: "./src/resume.html", // HTML file for resume
+            template: "./src/resume.html",
             filename: "resume.html",
-            chunks: ["template", "styles"], // Include the relevant chunks
+            chunks: ["template", "styles"],
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/generate.html",
+            filename: "generate.html",
+            chunks: ["main", "styles"],
         }),
         new MiniCssExtractPlugin({
-            filename: "styles.css",
+            filename: "[name].css",
         }),
         new CopyWebpackPlugin({
             patterns: [{ from: "public", to: "" }],
@@ -57,8 +63,8 @@ export default {
             { directory: path.join(__dirname, "dist") },
             { directory: path.join(__dirname, "public") },
         ],
-        open: true, // Opens the browser automatically
-        hot: true, // Enables hot module replacement
+        open: true,
+        hot: true,
     },
-    mode: "development", // Set to 'production' for production builds
+    mode: "development",
 };
